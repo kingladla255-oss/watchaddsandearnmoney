@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch & Earn - Pakistan's No.1 Platform</title>
+    <style>
+        :root {
+            --primary: #00c853;
+            --primary-dark: #009624;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #212529;
+            --text-muted: #6c757d;
+            --border: #e9ecef;
+        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        .header { background: var(--surface); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .menu-icon { font-size: 24px; cursor: pointer; background: none; border: none; display: none; color: var(--text); }
+        
+        .container { max-width: 450px; margin: 0 auto; padding: 20px 15px; box-sizing: border-box; }
+        .card { background: var(--surface); padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+        
+        /* Big Bold Poster Style */
+        .poster-banner { background: linear-gradient(135deg, #00c853, #00b0ff); color: white; padding: 30px 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 20px rgba(0,200,83,0.15); }
+        .poster-banner h1 { margin: 0; font-size: 32px; font-weight: 900; letter-spacing: 1px; }
+        .poster-banner p { margin: 5px 0 0 0; color: #ffffff; font-size: 14px; font-weight: 600; opacity: 0.9; letter-spacing: 2px; }
+        
+        /* Urdu Text Typography */
+        .urdu-text { direction: rtl; text-align: center; font-size: 15px; color: #495057; line-height: 1.8; margin: 15px 0; font-weight: 500; }
+        .trusted-tag { font-size: 16px; color: #2b5c8f; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
+        
+        /* Inputs & Buttons */
+        input { width: 100%; padding: 14px; margin: 12px 0; border-radius: 12px; border: 1.5px solid var(--border); background: #f1f3f5; text-align: center; box-sizing: border-box; font-size: 16px; }
+        input:focus { border-color: var(--primary); outline: none; background: var(--surface); }
+        button, .ad-link-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: bold; display: inline-block; text-decoration: none; box-sizing: border-box; text-align: center; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2); }
+        
+        /* Dashboard & Components */
+        .wallet-box { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 30px 20px; border-radius: 24px; font-weight: bold; text-align: center; box-shadow: 0 10px 25px rgba(56, 239, 125, 0.2); }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+        .stat-item { background: var(--surface); padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; color: #6c757d; text-align: center; }
+        .stat-item strong { display: block; font-size: 16px; color: var(--text); margin-top: 4px; }
+        
+        /* Sidebar Menu Layout */
+        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: var(--surface); box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000; transition: 0.3s; padding: 30px 20px; box-sizing: border-box; border-left: 1px solid var(--border); }
+        .sidebar.active { right: 0; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 9999; display: none; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); padding-top: 100px; z-index: 99999; backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation bar -->
+    <div class="header">
+        <div class="logo">🍀 Watch & Earn</div>
+        <button class="menu-icon" id="openMenuBtn">☰</button>
+    </div>
+
+    <div class="overlay" id="menuOverlay"></div>
+
+    <!-- Side Corner Profile Drawer Menu -->
+    <div class="sidebar" id="sideMenu">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px;">
+            <h3 style="margin: 0; font-size: 18px;">👤 My Account</h3>
+            <button style="width: auto; padding: 5px 10px; background: #e9ecef; color: #495057; border: none; border-radius: 5px;" id="closeMenuBtn">✕</button>
+        </div>
+        <p style="margin: 10px 0;">Mobile: <strong id="userPhoneDisplay">User</strong></p>
+        <p style="color:var(--primary); font-weight:bold; margin: 5px 0;">Status: Verified Member</p>
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+        <p style="font-size: 14px; color: var(--text-muted);">⚙️ Profile Settings</p>
+        <p style="font-size: 14px; color: var(--text-muted);">🔒 Security Settings</p>
+        <button id="logoutBtn" style="background: #dc3545; margin-top: 40px;">🔄 Logout Account</button>
+    </div>
+
+    <div class="container">
+        
+        <!-- 1. AUTH / LOGIN SCREEN -->
+        <div id="authScreen">
+            <!-- Big Brand Poster Header -->
+            <div class="poster-banner">
+                <h1>WATCH & EARN</h1>
+                <p>PLAY ADS & GET PAID</p>
+            </div>
+
+            <!-- Urdu App Explanation Card -->
+            <div class="card">
+                <div class="urdu-text">
+                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.00010</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">Total Members<strong>42,810+</strong></div>
+                    <div class="stat-item">Total Paid Out<strong>$14,940+</strong></div>
+                </div>
+
+                <!-- tel input solves variable length mobile web glitches -->
+                <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
+                <input type="password" id="passInput" placeholder="Choose Account Password">
+                <button id="authBtn" style="margin-top: 15px;">Get Started / Log In</button>
+                
+                <!-- Trusted App Urdu Banner Description -->
+                <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
+            </div>
+        </div>
+
+        <!-- 2. SYSTEM MAIN DASHBOARD -->
+        <div id="mainDashboard" style="display: none;">
+            <div class="wallet-box">
+                <p style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Available Balance</p>
+                <h1 style="margin: 5px 0 0 0; font-size: 44px; font-weight: 800;">$<span id="userBalance">0.00000</span></h1>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">Today's Ads Left<strong id="adsLeft" style="color: var(--primary);">100</strong></div>
+                <div class="stat-item">Reward Rate<strong>$0.00010 / Ad</strong></div>
+            </div>
+            <div class="card" style="padding: 15px;">
+                <a href="https://effectivecpmnetwork.com" target="_blank" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;">
+                    🎥 Play Ad & Earn Money
+                </a>
+            </div>
+            <div id="withdrawSection" class="card" style="display: none; background: #f1fff5; border-color: var(--primary);">
+                <h3 style="color: var(--primary); margin-top: 0;">💳 Dynamic Payout Unlocked!</h3>
+                <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;">آپ کا بیلنس $5 کی حد عبور کر چکا ہے۔ نیچے سے اپنا اکاؤنٹ منتخب کریں۔</p>
+                <button id="easyPaisaBtn" style="background: #28a745; margin-bottom: 10px;">Withdraw via EasyPaisa</button>
+                <button id="jazzCashBtn" style="background: #e65100;">Withdraw via JazzCash</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. CAPTCHA OVERLAY MODAL -->
+    <div id="adModal" class="modal">
+        <div class="card" style="max-width: 380px; margin: 0 auto;">
+            <h3 style="color: var(--primary); margin-top: 0;">Unlock Earnings</h3>
+            <p style="font-size: 14px; color: var(--text-muted);">Enter the correct answer to claim your reward credit.</p>
+            <div style="background: #f1f3f5; padding: 20px; border-radius: 15px; border: 1px solid var(--border);">
+                <p style="font-size: 26px; font-weight: bold; color: #212529; margin: 10px 0;"><span id="num1"></span> + <span id="num2"></span> = ?</p>
+                <input type="number" id="captchaInput" placeholder="Your Answer" style="background: white; margin-bottom: 15px;">
+                <button id="claimBtn">Claim Credit Reward</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+let balance = parseFloat(localStorage.getItem("balance")) || 0.00000;
+let watchedAds = parseInt(localStorage.getItem("adsWatched")) || 0;
+let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+let userPhone = localStorage.getItem("userPhone") || "";
+const DAILY_LIMIT = 100;
+let correctAnswer;
+
+let today = new Date().toDateString();
+if (localStorage.getItem("adDate") !== today) {
+    localStorage.setItem("adDate", today);
+    localStorage.setItem("adsWatched", 0);
+    watchedAds = 0;
+}
+
+function refreshUI() {
+    if (isLoggedIn) {
