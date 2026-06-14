@@ -87,7 +87,8 @@
 
                 <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
                 <input type="password" id="passInput" placeholder="Choose Account Password">
-                <button type="button" id="authBtn" style="margin-top: 15px;" onclick="loginUser()">Get Started / Log In</button>
+                <button type="button" id="authBtn" style="margin-top: 15px;" onclick="let phone = document.getElementById('phoneInput').value; if(phone.trim() === '') { alert('Please enter mobile number'); } else { document.getElementById('userPhoneDisplay').innerText = phone; document.getElementById('authScreen').style.display = 'none'; document.getElementById('mainDashboard').style.display = 'block'; if(typeof updateUI === 'function') { updateUI(); } }">Get Started / Log In</button>
+
                 
                 <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
             </div>
