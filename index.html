@@ -14,6 +14,7 @@
         .wallet-box { background: linear-gradient(135deg, #1feb84, #00b359); color: black; padding: 25px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 15px rgba(31, 235, 132, 0.2); }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); padding-top: 40px; z-index: 9999; }
         .ad-container { width: 100%; height: 280px; background: black; border-radius: 8px; overflow: hidden; margin: 15px 0; border: 1px solid #444; }
+        .logout-btn { background: #444444; color: white; margin-top: 15px; font-size: 14px; padding: 8px; width: auto; display: inline-block; padding-left: 20px; padding-right: 20px; }
     </style>
 </head>
 <body>
@@ -55,6 +56,9 @@
             <button id="easyPaisaBtn" style="background: #28a745; margin-bottom: 12px;">Withdraw via EasyPaisa</button>
             <button id="jazzCashBtn" style="background: #dc3545;">Withdraw via JazzCash</button>
         </div>
+
+        <!-- Logout Button -->
+        <button id="logoutBtn" class="logout-btn">🔄 Logout Account</button>
 
     </div>
 
@@ -119,6 +123,9 @@ function refreshUI() {
         } else {
             document.getElementById("withdrawSection").style.display = "none";
         }
+    } else {
+        document.getElementById("authScreen").style.display = "block";
+        document.getElementById("mainDashboard").style.display = "none";
     }
 }
 refreshUI();
@@ -146,7 +153,7 @@ document.getElementById("playAdBtn").addEventListener("click", function() {
     document.getElementById("captchaSection").style.display = "none";
     document.getElementById("adStatus").innerText = "Video Ad Is Running...";
     
-    // IMPORTANT: Paste your real Adsterra Direct Link below
+    // Aap ka naya Adsterra link lag chuka hai
     let adsterraLink = "https://www.effectivecpmnetwork.com/eevd9hwrq?key=4bd32b9544beeaa1457dbd5d751ca729"; 
     document.getElementById("adIframe").src = adsterraLink;
 
@@ -200,6 +207,14 @@ function processWithdraw(method) {
 }
 document.getElementById("easyPaisaBtn").addEventListener("click", () => processWithdraw("EasyPaisa"));
 document.getElementById("jazzCashBtn").addEventListener("click", () => processWithdraw("JazzCash"));
+
+// Logout Button Interaction
+document.getElementById("logoutBtn").addEventListener("click", function() {
+    localStorage.removeItem("isLoggedIn");
+    isLoggedIn = false;
+    alert("Logged out successfully!");
+    refreshUI();
+});
 </script>
 
 </body>
