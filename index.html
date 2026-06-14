@@ -3,197 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cashout - Official Watch & Earn</title>
+    <title>Watch & Earn - Premium Platform</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b0f19; color: #ffffff; margin: 0; padding: 0; text-align: center; }
-        .container { max-width: 450px; margin: 0 auto; padding: 25px 15px; }
-        .card { background: #161f30; padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid #24324d; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-        h2 { font-size: 24px; margin-top: 0; color: #1feb84; font-weight: 700; }
-        input { width: 90%; padding: 14px; margin: 12px 0; border-radius: 12px; border: 1px solid #24324d; background: #0f1624; color: white; font-size: 16px; text-align: center; transition: 0.3s; }
-        input:focus { border-color: #1feb84; outline: none; box-shadow: 0 0 10px rgba(31,235,132,0.2); }
-        button { width: 95%; padding: 14px; background: #1feb84; color: #0b0f19; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(31, 235, 132, 0.3); }
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
-        button:disabled { background: #2d3b54; color: #6b7c96; cursor: not-allowed; opacity: 0.6; box-shadow: none; }
-        .wallet-box { background: linear-gradient(135deg, #1feb84, #00b359); color: #0b0f19; padding: 30px 20px; border-radius: 24px; font-weight: bold; box-shadow: 0 10px 30px rgba(31, 235, 132, 0.3); position: relative; overflow: hidden; }
-        .wallet-box::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); pointer-events: none; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7, 10, 19, 0.98); padding-top: 80px; z-index: 9999; backdrop-filter: blur(5px); }
-        .logout-btn { background: transparent; color: #ef4444; border: 1px solid #ef4444; margin-top: 20px; font-size: 14px; padding: 10px 24px; width: auto; display: inline-block; box-shadow: none; }
-        .logout-btn:hover { background: rgba(239,68,68,0.1); }
+        :root {
+            --primary: #00c853;
+            --primary-dark: #009624;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #212529;
+            --text-muted: #6c757d;
+            --border: #e9ecef;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Header & Navigation Bar */
+        .header { background: var(--surface); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.02); border-bottom: 1px solid var(--border); }
+        .logo { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+        .menu-icon { font-size: 24px; cursor: pointer; background: none; border: none; padding: 5px; color: var(--text); display: none; }
+        
+        .container { max-width: 450px; margin: 0 auto; padding: 20px 15px; width: 100%; box-sizing: border-box; flex: 1; }
+        .card { background: var(--surface); padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); text-align: center; }
+        
+        /* Inputs & Typography */
+        h2 { font-size: 24px; margin-top: 0; color: var(--text); font-weight: 700; letter-spacing: -0.5px; }
+        p { color: var(--text-muted); font-size: 14px; line-height: 1.5; }
+        input { width: 100%; padding: 14px; margin: 12px 0; border-radius: 12px; border: 1.5px solid var(--border); background: #f1f3f5; color: var(--text); font-size: 16px; text-align: center; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: var(--primary); outline: none; background: var(--surface); box-shadow: 0 0 10px rgba(0,200,83,0.1); }
+        
+        /* Buttons */
+        button, .ad-link-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2); display: inline-block; text-decoration: none; box-sizing: border-box; text-align: center; }
+        button:hover, .ad-link-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        
+        /* Dashboard Components */
+        .wallet-box { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 30px 20px; border-radius: 24px; font-weight: bold; box-shadow: 0 10px 25px rgba(56, 239, 125, 0.3); text-align: center; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-item { background: var(--surface); padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
+        .stat-item strong { display: block; font-size: 16px; color: var(--text); margin-top: 4px; }
+        
+        /* Instruction List */
+        .info-list { text-align: left; padding-left: 20px; margin: 15px 0; }
+        .info-list li { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+        
+        /* Side Corner Sidebar Menu */
+        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: var(--surface); box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000; transition: 0.3s; padding: 30px 20px; box-sizing: border-box; text-align: left; border-left: 1px solid var(--border); }
+        .sidebar.active { right: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+        .sidebar-menu li { padding: 14px 10px; border-radius: 8px; cursor: pointer; color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 10px; font-size: 15px; transition: 0.2s; }
+        .sidebar-menu li:hover { background: var(--bg); color: var(--primary); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 9999; display: none; backdrop-filter: blur(2px); }
+        
+        /* Modal Captcha */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); padding-top: 100px; z-index: 99999; backdrop-filter: blur(4px); }
     </style>
 </head>
 <body>
 
-<div class="container">
-
-    <!-- 1. LOGIN SCREEN -->
-    <div id="authScreen" class="card">
-        <h2 style="color: #ffffff;">📱 Cashout Login</h2>
-        <p style="color: #8fa0bc; font-size: 14px; margin-bottom: 20px;">Enter your phone and password to start earning</p>
-        <input type="number" id="phoneInput" placeholder="Mobile Number (e.g., 03001234567)">
-        <input type="password" id="passInput" placeholder="Enter Password">
-        <button id="authBtn" style="margin-top: 15px;">Sign In / Register</button>
+    <!-- Top App Bar -->
+    <div class="header">
+        <div class="logo">🍀 Watch & Earn</div>
+        <button class="menu-icon" id="openMenuBtn">☰</button>
     </div>
 
-    <!-- 2. MAIN DASHBOARD -->
-    <div id="mainDashboard" style="display: none;">
-        
-        <!-- Top Wallet -->
-        <div class="wallet-box">
-            <p style="margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8;">Total Wallet Balance</p>
-            <h1 style="margin: 8px 0 0 0; font-size: 42px; font-weight: 800; letter-spacing: -1px;">$<span id="userBalance">0.00000</span></h1>
+    <!-- Background dim overlay -->
+    <div class="overlay" id="menuOverlay"></div>
+
+    <!-- Side Navigation Drawer -->
+    <div class="sidebar" id="sideMenu">
+        <div class="sidebar-header">
+            <h3 style="margin: 0; font-size: 18px;">👤 My Account</h3>
+            <button style="width: auto; padding: 5px 10px; background: #e9ecef; color: #495057; box-shadow: none;" id="closeMenuBtn">✕</button>
         </div>
-
-        <!-- Progress Tracker -->
-        <div class="card" style="margin-top: 20px; background: #0f1624;">
-            <p style="margin: 0; font-size: 15px; color: #8fa0bc;">Daily Ads Limit: <strong id="adsLeft" style="color: #1feb84;">100</strong> / 100 Left</p>
+        <div style="text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border);">
+            <div style="width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; line-height: 60px; font-size: 24px; font-weight: bold; margin: 0 auto 10px;">U</div>
+            <strong id="userPhoneDisplay" style="font-size: 15px; color: var(--text);">User</strong>
+            <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--primary);">Verified Member</p>
         </div>
-
-        <!-- Play Ad Zone -->
-        <div class="card">
-            <button id="playAdBtn" style="background: #ffcc00; color: #0b0f19; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);">🎥 Play Video Ad & Earn Money</button>
-        </div>
-
-        <!-- Smart Withdraw Panel -->
-        <div id="withdrawSection" class="card" style="display: none; border-color: #1feb84; background: #102021;">
-            <h3 style="color: #1feb84; margin-top: 0; font-size: 18px;">💳 $5 Threshold Reached!</h3>
-            <p style="font-size: 14px; color: #8fa0bc; margin-bottom: 20px;">Select your account to instantly cash out $5.00</p>
-            <button id="easyPaisaBtn" style="background: #28a745; color: white; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">Withdraw via EasyPaisa</button>
-            <button id="jazzCashBtn" style="background: #dc3545; color: white; box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);">Withdraw via JazzCash</button>
-        </div>
-
-        <!-- Logout Button -->
-        <br>
-        <button id="logoutBtn" class="logout-btn">🔄 Logout Account</button>
-
+        <ul class="sidebar-menu">
+            <li>⚙️ Profile Settings</li>
+            <li>📊 Detailed Earning Log</li>
+            <li>🔒 Security & Password</li>
+            <li id="logoutBtn" style="color: #dc3545; margin-top: 40px; border: 1px solid #f8d7da; background: #fff5f5;">🔄 Logout Account</li>
+        </ul>
     </div>
 
-</div>
+    <!-- Content Space -->
+    <div class="container">
 
-<!-- 3. TIMER & CAPTCHA POPUP MODAL -->
-<div id="adModal" class="modal">
-    <div class="card" style="max-width: 400px; margin: 0 auto; background: #161f30; border-color: #24324d;">
-        <h3 id="adStatus" style="margin-top: 5px; color: #1feb84;">Solve Math to Unlock Earnings</h3>
-        <!-- Captcha System -->
-        <div id="captchaSection" style="background: #0f1624; padding: 20px; border-radius: 15px; border: 1px solid #24324d;">
-            <h4 style="margin: 0 0 12px 0; color: #00ffcc; font-size: 16px;">🤖 Captcha Verification</h4>
-            <p style="font-size: 24px; margin: 10px 0; font-weight: bold; color: #ffffff;"><span id="num1"></span> + <span id="num2"></span> = ?</p>
-            <input type="number" id="captchaInput" placeholder="Enter Answer" style="width: 80%; margin-bottom: 15px;">
-            <button id="claimBtn" style="background: #28a745; color: white; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">Claim Reward $0.00010</button>
+        <!-- 1. AUTHENTICATION / LOGIN SCREEN -->
+        <div id="authScreen" class="card">
+            <h2>📱 Welcome To Cashout</h2>
+            <p>Watch daily ads loops to earn instant cash and claim easy verification rewards.</p>
+            
+            <!-- Platform Public Stats -->
+            <div class="stats-grid" style="margin-top: 15px;">
+                <div class="stat-item">Total Members<strong>42,810+</strong></div>
+                <div class="stat-item">Total Cashout Paid<strong>$14,940+</strong></div>
+            </div>
+
+            <input type="number" id="phoneInput" placeholder="Enter Mobile Number">
+            <input type="password" id="passInput" placeholder="Choose Account Password">
+            <button id="authBtn" style="margin-top: 15px;">Get Started / Log In</button>
         </div>
-    </div>
-</div>
 
-<script>
-// State Management
-let balance = parseFloat(localStorage.getItem("balance")) || 0.00000;
-let watchedAds = parseInt(localStorage.getItem("adsWatched")) || 0;
-let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-const DAILY_LIMIT = 100;
-let adTimer, timeLeft, correctAnswer;
+        <!-- 2. SYSTEM MAIN DASHBOARD -->
+        <div id="mainDashboard" style="display: none;">
+            
+            <!-- Dynamic Wallet Box -->
+            <div class="wallet-box">
+                <p style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9;">Available Balance</p>
+                <h1 style="margin: 5px 0 0 0; font-size: 44px; font-weight: 800;">$<span id="userBalance">0.00000</span></h1>
+            </div>
 
-// 24 Hour Reset for Ads Limit
-let today = new Date().toDateString();
-if (localStorage.getItem("adDate") !== today) {
-    localStorage.setItem("adDate", today);
-    localStorage.setItem("adsWatched", 0);
-    watchedAds = 0;
-}
+            <!-- Tracker & Info Grid -->
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-item">Today's Ads Left<strong id="adsLeft" style="color: var(--primary);">100</strong></div>
+                <div class="stat-item">Reward Rate<strong>$0.00010 / Ad</strong></div>
+            </div>
 
-// Global UI Updater
-function refreshUI() {
-    if (isLoggedIn) {
-        document.getElementById("authScreen").style.display = "none";
-        document.getElementById("mainDashboard").style.display = "block";
-        document.getElementById("userBalance").innerText = balance.toFixed(5);
-        
-        let remaining = DAILY_LIMIT - watchedAds;
-        document.getElementById("adsLeft").innerText = remaining;
-        
-        if (remaining <= 0) {
-            let btn = document.getElementById("playAdBtn");
-            btn.innerText = "🚫 Today's Limit Reached!";
-            btn.disabled = true;
-        }
+            <!-- Action Button -->
+            <div class="card" style="padding: 15px;">
+                <a href="https://effectivecpmnetwork.com" target="_blank" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);">
+                    🎥 Play Ad & Earn Money
+                </a>
+            </div>
 
-        // Auto Hide/Show EasyPaisa & JazzCash on $5 criteria
-        if (balance >= 5.00000) {
-            document.getElementById("withdrawSection").style.display = "block";
-        } else {
-            document.getElementById("withdrawSection").style.display = "none";
-        }
-    } else {
-        document.getElementById("authScreen").style.display = "block";
-        document.getElementById("mainDashboard").style.display = "none";
-    }
-}
-refreshUI();
+            <!-- Smart Withdraw Box (Triggers on $5 Balance threshold) -->
+            <div id="withdrawSection" class="card" style="display: none; border-color: var(--primary); background: #f1fff5;">
+                <h3 style="color: var(--primary); margin-top: 0; font-size: 18px;">💳 Dynamic Payout Unlocked!</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Aap ka balance minimum requirement $5 ko poora kar chuka hai.</p>
+                
+                <button id="easyPaisaBtn" style="background: #28a745; margin-bottom: 10px;">Withdraw via EasyPaisa</button>
+                <button id="jazzCashBtn" style="background: #e65100;">Withdraw via JazzCash</button>
 
-// Auth Function Fix
-document.getElementById("authBtn").addEventListener("click", function() {
-    let phone = document.getElementById("phoneInput").value;
-    let pass = document.getElementById("passInput").value;
-    if (phone.length < 10 || pass.length < 4) {
-        alert("Pehle sahi Phone Number aur Password enter karein!");
-        return;
-    }
-    localStorage.setItem("isLoggedIn", "true");
-    isLoggedIn = true;
-    refreshUI();
-});
+                <ul class="info-list">
+                    <li>⚠️ **Rule:** Ek din me sirf 1 baar automatic extraction request send ho sakti hai.</li>
+                    <li>🕒 **Timeframe:** Amount 24 ghante me apke account me transfer ho jayegi.</li>
+                    <li>❌ **Security:** Account holder ka naam sahi match hona zaroori hai.</li>
+                </ul>
+            </div>
 
-// Ad Running Logic (Redirect Method Fix)
-document.getElementById("playAdBtn").addEventListener("click", function() {
-    if (watchedAds >= DAILY_LIMIT) return;
-
-    let adsterraLink = "https://effectivecpmnetwork.com"; 
-    
-    // Step 1: Is user ke liye captcha pehle se set kar do background me
-    let n1 = Math.floor(Math.random() * 10) + 1;
-    let n2 = Math.floor(Math.random() * 10) + 1;
-    correctAnswer = n1 + n2;
-    document.getElementById("num1").innerText = n1;
-    document.getElementById("num2").innerText = n2;
-    document.getElementById("captchaInput").value = "";
-    
-    // Step 2: Modal ko active karo taakay back aane par sidha captcha dikhe
-    localStorage.setItem("showModalNext", "true");
-    
-    // Step 3: Seedha ad par bhej do
-    window.location.href = adsterraLink;
-});
-
-// Check if returned from Ad
-if(localStorage.getItem("showModalNext") === "true") {
-    localStorage.removeItem("showModalNext");
-    let n1 = Math.floor(Math.random() * 10) + 1;
-    let n2 = Math.floor(Math.random() * 10) + 1;
-    correctAnswer = n1 + n2;
-    document.getElementById("num1").innerText = n1;
-    document.getElementById("num2").innerText = n2;
-    document.getElementById("adModal").style.display = "block";
-}
-
-// Reward Distribution Engine
-document.getElementById("claimBtn").addEventListener("click", function() {
-    let ans = parseInt(document.getElementById("captchaInput").value);
-    if (ans === correctAnswer) {
-        balance += 0.00010;
-        watchedAds += 1;
-        localStorage.setItem("balance", balance);
-        localStorage.setItem("adsWatched", watchedAds);
-        
-        alert("Success! $0.00010 added to wallet.");
-        document.getElementById("adModal").style.display = "none";
-        refreshUI();
-    } else {
-        alert("Wrong answer! Try again.");
-    }
-});
-
-// Balance Auto Deduction System
-function processWithdraw(method) {
-    alert(`Withdrawal Request Sent via ${method}! $5.00 deducted.`);
-    balance -= 5.00000;
-    localStorage.setItem("balance", balance);
-    refreshUI();
-}
+            <!-- Platform General Rules Context -->
+            <div class="card" style="background: transparent; border-style: dashed; box-shadow: none;">
+                <h4 style="margin: 0 0 10px 0; font-size: 14px; text-align: left; color: var(--text);">ℹ️ Platform Guidelines:</h4>
+                <ul class="info-list" style="margin: 0;">
+                    <li>Daily high-speed loops limit rozana raat 12 baje reset ho jati hai.</li>
