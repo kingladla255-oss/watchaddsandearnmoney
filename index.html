@@ -87,7 +87,8 @@
 
                 <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
                 <input type="password" id="passInput" placeholder="Choose Account Password">
-                <button type="button" id="authBtn" style="margin-top: 15px;" onclick="let phone = document.getElementById('phoneInput').value; if(phone.trim() === '') { alert('Please enter mobile number'); } else { document.getElementById('userPhoneDisplay').innerText = phone; document.getElementById('authScreen').style.display = 'none'; document.getElementById('mainDashboard').style.display = 'block'; if(typeof updateUI === 'function') { updateUI(); } }">Get Started / Log In</button>
+                <button type="button" id="authBtn" style="margin-top: 15px;">Get Started / Log In</button>
+
 
                 
                 <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
@@ -104,11 +105,8 @@
                 <div class="stat-item">Today's Ads Left<strong id="adsLeft" style="color: var(--primary);">100</strong></div>
                 <div class="stat-item">Reward Rate<strong style="color: var(--primary); font-size: 15px;">$0.030 / Ad</strong></div>
             </div>
-            <div class="card" style="padding: 15px;">
-                <button type="button" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;" onclick="openAdAndShowCaptcha()">
-                    🎥 Play Ad & Earn Money
-                </button>
-            </div>
+            <button type="button" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;" onclick="openAdAndShowCaptcha()">🎥 Play Ad & Earn Money</button>
+
             <div id="withdrawSection" class="card" style="display: none; background: #f1fff5; border-color: var(--primary);">
                 <h3 style="color: var(--primary); margin-top: 0;">💳 Dynamic Payout Unlocked!</h3>
                 <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;">آپ کا بیلنس $5 کی حد عبور کر چکا ہے۔ نیچے سے اپنا اکاؤنٹ منتخب کریں:</p>
@@ -133,11 +131,11 @@
     </div>
 
     <script>
-        // Bulletproof Mobile Storage Fallback Wrapper
         const safeStorage = {
             getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
             setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
-            removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
+                        removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
+            
         };
 
         let balance = parseFloat(safeStorage.getItem("balance")) || 0.00000;
@@ -146,8 +144,64 @@
         let num2 = 0;
 
         // لاگ ان فنکشن
-        function loginUser() {
+        document.getElementById('authBtn').addEventListener('click', function() {
             let phone = document.getElementById('phoneInput').value;
             if(phone.trim() === "") {
                 alert("Please enter mobile number");
                 return;
+            }
+            document.getElementById('userPhoneDisplay').innerText = phone;
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'block';
+            updateUI();
+        });        // اسکرین اپڈیٹ کرنے کا فنکشن
+        function updateUI() {
+            document.getElementById('userBalance').innerText = balance.toFixed(5);
+            document.getElementById('adsLeft').innerText = (100 - watchedAds);
+            if(balance >= 5.0) {
+                document.getElementById('withdrawSection').style.display = 'block';
+            }
+        }
+
+        // ایڈ کھولنے اور کیپچا جنریٹ کرنے کا فنکشن
+        function openAdAndShowCaptcha() {
+            if (watchedAds >= 100) {
+                alert("Today's limit reached!");
+                return;
+            }
+            window.open("https://effectivecpmnetwork.com", "_blank");
+            num1 = Math.floor(Math.random() * 10) + 1;
+            num2 = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
+            document.getElementById('adModal').style.display = 'block';
+        }
+
+        // کلیم بٹن پر کلک کا لوجک
+        document.getElementById('claimBtn').addEventListener('click', function() {
+            let userAnswer = parseInt(document.getElementById('captchaInput').value);
+            let correctAnswer = num1 + num2;
+            
+            if (isNaN(userAnswer)) {
+                alert("Please enter your answer!");
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                balance += 0.030;
+                watchedAds += 1;
+                safeStorage.setItem("balance", balance);
+                safeStorage.setItem("adsWatched", watchedAds);
+                updateUI();
+                document.getElementById('adModal').style.display = 'none';
+                document.getElementById('captchaInput').value = "";
+                alert("Correct answer! Reward of $0.030 added.");
+            } else {
+                alert("Wrong answer! Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+                
