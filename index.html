@@ -77,7 +77,7 @@
 
             <div class="card">
                 <div class="urdu-text">
-                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.030</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتےkeys۔
+                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.030</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
                 </div>
                 
                 <div class="stats-grid">
@@ -87,7 +87,7 @@
 
                 <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
                 <input type="password" id="passInput" placeholder="Choose Account Password">
-                <button id="authBtn" style="margin-top: 15px;" onclick="loginUser()">Get Started / Log In</button>
+                <button type="button" id="authBtn" style="margin-top: 15px;" onclick="loginUser()">Get Started / Log In</button>
                 
                 <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
             </div>
@@ -150,4 +150,3 @@
             if(phone.trim() === "") {
                 alert("Please enter mobile number");
                 return;
-            }
