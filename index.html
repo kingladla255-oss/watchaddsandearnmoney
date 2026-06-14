@@ -131,11 +131,10 @@
     </div>
 
     <script>
-        const safeStorage = {
+               const safeStorage = {
             getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
             setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
-                        removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
-            
+            removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
         };
 
         let balance = parseFloat(safeStorage.getItem("balance")) || 0.00000;
@@ -154,7 +153,9 @@
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('mainDashboard').style.display = 'block';
             updateUI();
-        });        // اسکرین اپڈیٹ کرنے کا فنکشن
+        });
+
+        // اسکرین اپڈیٹ کرنے کا فنکشن
         function updateUI() {
             document.getElementById('userBalance').innerText = balance.toFixed(5);
             document.getElementById('adsLeft').innerText = (100 - watchedAds);
@@ -169,14 +170,13 @@
                 alert("Today's limit reached!");
                 return;
             }
-            window.open("https://effectivecpmnetwork.com", "_blank");
             num1 = Math.floor(Math.random() * 10) + 1;
             num2 = Math.floor(Math.random() * 10) + 1;
             document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
             document.getElementById('adModal').style.display = 'block';
         }
 
-        // کلیم بٹن پر کلک کا لوجک
+        // کلیم بٹن پر کلک کا لوجک (باکس بند ہونے پر ایڈ پکی کھلے گی)
         document.getElementById('claimBtn').addEventListener('click', function() {
             let userAnswer = parseInt(document.getElementById('captchaInput').value);
             let correctAnswer = num1 + num2;
@@ -187,21 +187,26 @@
             }
             
             if (userAnswer === correctAnswer) {
-                balance += 0.0003;
+                balance += 0.030;
                 watchedAds += 1;
                 safeStorage.setItem("balance", balance);
                 safeStorage.setItem("adsWatched", watchedAds);
                 updateUI();
+                
                 document.getElementById('adModal').style.display = 'none';
                 document.getElementById('captchaInput').value = "";
+                
+                // ایڈ اب یہاں پکی اوپن ہوگی کیونکہ یوزر نے کلک خود کیا ہے
+                window.open("https://effectivecpmnetwork.com", "_blank");
                 alert("Correct answer! Reward of $0.030 added.");
             } else {
                 alert("Wrong answer! Please try again.");
             }
         });
+
+        // پیج لوڈ پر یو آئی اپڈیٹ کرنا
+        updateUI();
     </script>
 </body>
 </html>
-
-
-                
+ 
