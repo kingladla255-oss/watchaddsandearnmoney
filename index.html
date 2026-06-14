@@ -19,7 +19,7 @@
         .logo { font-size: 20px; font-weight: 800; color: var(--primary); }
         .menu-icon { font-size: 24px; cursor: pointer; background: none; border: none; display: none; color: var(--text); }
         
-        .container { max-width: 450px; margin: 0 auto; padding: 20px 15px; box-sizing: border-box; }
+        .container { max-width: 450px; margin: 0 auto; padding: 20px 15px; width: 100%; box-sizing: border-box; }
         .card { background: var(--surface); padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
         
         /* Big Bold Poster Style */
@@ -36,7 +36,7 @@
         input:focus { border-color: var(--primary); outline: none; background: var(--surface); }
         button, .ad-link-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: bold; display: inline-block; text-decoration: none; box-sizing: border-box; text-align: center; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2); }
         
-        /* Dashboard & Components */
+        /* Dashboard Components */
         .wallet-box { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 30px 20px; border-radius: 24px; font-weight: bold; text-align: center; box-shadow: 0 10px 25px rgba(56, 239, 125, 0.2); }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
         .stat-item { background: var(--surface); padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; color: #6c757d; text-align: center; }
@@ -68,8 +68,8 @@
         <p style="margin: 10px 0;">Mobile: <strong id="userPhoneDisplay">User</strong></p>
         <p style="color:var(--primary); font-weight:bold; margin: 5px 0;">Status: Verified Member</p>
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-        <p style="font-size: 14px; color: var(--text-muted);">⚙️ Profile Settings</p>
-        <p style="font-size: 14px; color: var(--text-muted);">🔒 Security Settings</p>
+        <p style="font-size: 14px; color: var(--text-muted); cursor: pointer;">⚙️ Profile Settings</p>
+        <p style="font-size: 14px; color: var(--text-muted); cursor: pointer;">🔒 Security Settings</p>
         <button id="logoutBtn" style="background: #dc3545; margin-top: 40px;">🔄 Logout Account</button>
     </div>
 
@@ -86,7 +86,7 @@
             <!-- Urdu App Explanation Card -->
             <div class="card">
                 <div class="urdu-text">
-                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.00010</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
+                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.030</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
                 </div>
                 
                 <div class="stats-grid">
@@ -94,13 +94,12 @@
                     <div class="stat-item">Total Paid Out<strong>$14,940+</strong></div>
                 </div>
 
-                <!-- tel input solves variable length mobile web glitches -->
                 <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
                 <input type="password" id="passInput" placeholder="Choose Account Password">
                 <button id="authBtn" style="margin-top: 15px;">Get Started / Log In</button>
                 
                 <!-- Trusted App Urdu Banner Description -->
-                <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
+                <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵کین</div>
             </div>
         </div>
 
@@ -112,7 +111,7 @@
             </div>
             <div class="stats-grid">
                 <div class="stat-item">Today's Ads Left<strong id="adsLeft" style="color: var(--primary);">100</strong></div>
-                <div class="stat-item">Reward Rate<strong>$0.00010 / Ad</strong></div>
+                <div class="stat-item">Reward Rate<strong style="color: var(--primary); font-size: 15px;">$0.030 / Ad</strong></div>
             </div>
             <div class="card" style="padding: 15px;">
                 <a href="https://effectivecpmnetwork.com" target="_blank" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;">
@@ -142,19 +141,12 @@
     </div>
 
 <script>
-let balance = parseFloat(localStorage.getItem("balance")) || 0.00000;
-let watchedAds = parseInt(localStorage.getItem("adsWatched")) || 0;
-let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-let userPhone = localStorage.getItem("userPhone") || "";
-const DAILY_LIMIT = 100;
-let correctAnswer;
+// Bulletproof Mobile Storage Fallback Wrapper
+const safeStorage = {
+    getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
+    setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
+    removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
+};
 
-let today = new Date().toDateString();
-if (localStorage.getItem("adDate") !== today) {
-    localStorage.setItem("adDate", today);
-    localStorage.setItem("adsWatched", 0);
-    watchedAds = 0;
-}
-
-function refreshUI() {
-    if (isLoggedIn) {
+let balance = parseFloat(safeStorage.getItem("balance")) || 0.00000;
+let watchedAds = parseInt(safeStorage.getItem("adsWatched")) || 0;
