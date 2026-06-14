@@ -15,9 +15,13 @@
             --border: #e9ecef;
         }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        
+        /* Right Aligned Header Styling */
         .header { background: var(--surface); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 20px; font-weight: 800; color: var(--primary); }
-        .menu-icon { font-size: 24px; cursor: pointer; background: none; border: none; display: none; color: var(--text); }
+        .logo { font-size: 20px; font-weight: 800; color: var(--primary); order: 1; }
+        .menu-container { display: flex; align-items: center; gap: 15px; order: 2; }
+        .profile-btn { font-size: 22px; cursor: pointer; background: none; border: none; padding: 0; color: var(--text); }
+        .menu-icon { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; color: var(--text); }
         
         .container { max-width: 450px; margin: 0 auto; padding: 20px 15px; width: 100%; box-sizing: border-box; }
         .card { background: var(--surface); padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
@@ -38,6 +42,7 @@
         .stat-item { background: var(--surface); padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; color: #6c757d; text-align: center; }
         .stat-item strong { display: block; font-size: 16px; color: var(--text); margin-top: 4px; }
         
+        /* Sidebar Dropdown Styling */
         .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: var(--surface); box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000; transition: 0.3s; padding: 30px 20px; box-sizing: border-box; border-left: 1px solid var(--border); }
         .sidebar.active { right: 0; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 9999; display: none; }
@@ -46,13 +51,18 @@
 </head>
 <body>
 
+    <!-- Header bar with right aligned buttons -->
     <div class="header">
         <div class="logo">🍀 Watch & Earn</div>
-        <button class="menu-icon" id="openMenuBtn">☰</button>
+        <div class="menu-container">
+            <button class="profile-btn" id="profileIconBtn">👤</button>
+            <button class="menu-icon" id="openMenuBtn">☰</button>
+        </div>
     </div>
 
     <div class="overlay" id="menuOverlay"></div>
 
+    <!-- Side Menu Drawer -->
     <div class="sidebar" id="sideMenu">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px;">
             <h3 style="margin: 0; font-size: 18px;">👤 My Account</h3>
@@ -77,7 +87,7 @@
 
             <div class="card">
                 <div class="urdu-text">
-                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.0003</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
+                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.030</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
                 </div>
                 
                 <div class="stats-grid">
@@ -88,8 +98,6 @@
                 <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
                 <input type="password" id="passInput" placeholder="Choose Account Password">
                 <button type="button" id="authBtn" style="margin-top: 15px;">Get Started / Log In</button>
-
-
                 
                 <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
             </div>
@@ -105,13 +113,18 @@
                 <div class="stat-item">Today's Ads Left<strong id="adsLeft" style="color: var(--primary);">100</strong></div>
                 <div class="stat-item">Reward Rate<strong style="color: var(--primary); font-size: 15px;">$0.030 / Ad</strong></div>
             </div>
-            <button type="button" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;" onclick="openAdAndShowCaptcha()">🎥 Play Ad & Earn Money</button>
-
-            <div id="withdrawSection" class="card" style="display: none; background: #f1fff5; border-color: var(--primary);">
-                <h3 style="color: var(--primary); margin-top: 0;">💳 Dynamic Payout Unlocked!</h3>
-                <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;">آپ کا بیلنس $5 کی حد عبور کر چکا ہے۔ نیچے سے اپنا اکاؤنٹ منتخب کریں:</p>
-                <button id="easyPaisaBtn" style="background: #28a745; margin-bottom: 10px;">Withdraw via EasyPaisa</button>
-                <button id="jazzCashBtn" style="background: #e65100;">Withdraw via JazzCash</button>
+            <div class="card" style="padding: 15px;">
+                <button type="button" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;" onclick="openAdAndShowCaptcha()">
+                    🎥 Play Ad & Earn Money
+                </button>
+            </div>
+            
+            <!-- Always Visible Withdraw Section -->
+            <div id="withdrawSection" class="card" style="display: block; background: #f1fff5; border-color: var(--primary);">
+                <h3 style="color: var(--primary); margin-top: 0;">💳 Withdraw Payout Option</h3>
+                <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;">نیچے سے اپنا اکاؤنٹ منتخب کریں (حد: $5):</p>
+                <button id="easyPaisaBtn" style="background: #28a745; margin-bottom: 10px;" onclick="alert('Withdraw threshold is $5.00')">Withdraw via EasyPaisa</button>
+                <button id="jazzCashBtn" style="background: #e65100;" onclick="alert('Withdraw threshold is $5.00')">Withdraw via JazzCash</button>
             </div>
         </div>
 
@@ -131,83 +144,6 @@
     </div>
 
     <script>
-               const safeStorage = {
+        const safeStorage = {
             getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
             setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
-            removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
-        };
-
-        let balance = parseFloat(safeStorage.getItem("balance")) || 0.00000;
-        let watchedAds = parseInt(safeStorage.getItem("adsWatched")) || 0;
-        let num1 = 0;
-        let num2 = 0;
-
-        // لاگ ان فنکشن
-        document.getElementById('authBtn').addEventListener('click', function() {
-            let phone = document.getElementById('phoneInput').value;
-            if(phone.trim() === "") {
-                alert("Please enter mobile number");
-                return;
-            }
-            document.getElementById('userPhoneDisplay').innerText = phone;
-            document.getElementById('authScreen').style.display = 'none';
-            document.getElementById('mainDashboard').style.display = 'block';
-            updateUI();
-        });
-
-        // اسکرین اپڈیٹ کرنے کا فنکشن
-        function updateUI() {
-            document.getElementById('userBalance').innerText = balance.toFixed(5);
-            document.getElementById('adsLeft').innerText = (100 - watchedAds);
-            if(balance >= 5.0) {
-                document.getElementById('withdrawSection').style.display = 'block';
-            }
-        }
-
-        // ایڈ کھولنے اور کیپچا جنریٹ کرنے کا فنکشن
-        function openAdAndShowCaptcha() {
-            if (watchedAds >= 100) {
-                alert("Today's limit reached!");
-                return;
-            }
-            num1 = Math.floor(Math.random() * 10) + 1;
-            num2 = Math.floor(Math.random() * 10) + 1;
-            document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
-            document.getElementById('adModal').style.display = 'block';
-        }
-
-        // کلیم بٹن پر کلک کا لوجک (باکس بند ہونے پر ایڈ پکی کھلے گی)
-        document.getElementById('claimBtn').addEventListener('click', function() {
-            let userAnswer = parseInt(document.getElementById('captchaInput').value);
-            let correctAnswer = num1 + num2;
-            
-            if (isNaN(userAnswer)) {
-                alert("Please enter your answer!");
-                return;
-            }
-            
-            if (userAnswer === correctAnswer) {
-                balance += 0.030;
-                watchedAds += 1;
-                safeStorage.setItem("balance", balance);
-                safeStorage.setItem("adsWatched", watchedAds);
-                updateUI();
-                
-                document.getElementById('adModal').style.display = 'none';
-                document.getElementById('captchaInput').value = "";
-                
-                // ایڈ اب یہاں پکی اوپن ہوگی کیونکہ یوزر نے کلک خود کیا ہے
-                window.open("https://www.effectivecpmnetwork.com/eevd9hwrq?key=4bd32b9544beeaa1457dbd5d751ca729", "_blank");
-
-                alert("Correct answer! Reward of $0.030 added.");
-            } else {
-                alert("Wrong answer! Please try again.");
-            }
-        });
-
-        // پیج لوڈ پر یو آئی اپڈیٹ کرنا
-        updateUI();
-    </script>
-</body>
-</html>
- 
