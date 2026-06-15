@@ -1,338 +1,224 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cash Pocket Clone</title>
+    <title>Watch Ads and Earn Money</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 10px;
-        }
-
-        .phone-container {
-            width: 100%;
-            max-width: 400px;
-            background: #fff;
-            border-radius: 30px;
-            box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            position: relative;
-            min-height: 800px;
-        }
-
-        .page {
-            display: none;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .header-bg {
-            background-color: #00bcd4;
-            padding: 20px;
-            border-bottom-left-radius: 25px;
-            border-bottom-right-radius: 25px;
-            color: white;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .user-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-        }
-
-        .wallet-card {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            color: #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .acc-num { color: #666; font-size: 13px; }
-        .welcome-text { font-size: 18px; font-weight: bold; margin: 5px 0; }
-        .balance { font-size: 28px; font-weight: bold; color: #00bcd4; }
-        .balance-label { font-size: 12px; color: #999; }
-
-        .btn-withdraw {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            background: white;
-            border: 2px solid #4caf50;
-            color: #4caf50;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        .daily-task-banner {
-            background: #007bff;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .grid-item {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 10px 5px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .grid-item .icon { font-size: 24px; margin-bottom: 5px; }
-
-        .section-title {
-            color: #777;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .action-card {
-            background: #00bcd4;
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .back-btn {
-            background: #333;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        /* Input Forms formatting */
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        /* Ad Popups overlays simulation */
-        .ad-modal {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        .ad-box {
-            background: #222;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #ff9800;
-        }
-
-        /* Spin wheel graphic design */
-        #wheel-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 30px auto;
-        }
-        #wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 5px solid #333;
-            transition: transform 3s ease-out;
-            background: conic-gradient(
-                #ffc107 0deg 60deg, #ff5722 60deg 120deg, 
-                #4caf50 120deg 180deg, #00bcd4 180deg 240deg, 
-                #9c27b0 240deg 300deg, #e91e63 300deg 360deg
-            );
-        }
-
-        /* Quiz Box structure elements */
-        .quiz-box {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            margin-top: 15px;
-        }
-        .quiz-option {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .counter-badge {
-            background: #ff5722;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #f0f4f8; display: flex; justify-content: center; padding: 10px; font-family: sans-serif; }
+        .app-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-height: 750px; position: relative; }
+        .screen { display: none; padding: 20px; width: 100%; height: 100%; }
+        #page-login { display: block; }
+        :target { display: block !important; }
+        :target ~ #page-login { display: none !important; }
+        :target ~ .screen { display: none; }
+        .header-teal { background: #00bcd4; color: white; text-align: center; padding: 30px 10px; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
+        .logo-icon { font-size: 50px; margin-bottom: 10px; }
+        .live-bar { background: #00bcd4; color: white; padding: 12px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; width: 100%; }
+        .live-balance { background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 10px; }
+        .wallet-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 15px; padding: 15px; margin-top: 15px; text-align: center; }
+        .balance-txt { font-size: 28px; font-weight: bold; color: #00bcd4; margin: 5px 0; }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color: #333; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
+        .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
+        .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
+        .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
+        .info-block { background: #f1f5f9; border-left: 4px solid #00bcd4; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; text-align: right; }
+        .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
+        
+        /* 🆕 فکسڈ ان-ایپ سیکیور ٹائمر ونڈو ڈیزائن */
+        .adsterra-timer-box { display: none; background: #1e293b; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; }
+        .timer-circle { width: 70px; height: 70px; border: 4px solid #ff9800; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; margin: 15px auto; color: #ff9800; }
+        
+        /* غیر مرئی ارننگ ٹریکر (گوگل اوپن ہونے سے روکنے کے لیے) */
+        .secure-hidden-tracker { width: 1px; height: 1px; opacity: 0; position: absolute; pointer-events: none; }
     </style>
 </head>
 <body>
-
-<div class="phone-container">
-
-    <!-- MAIN DASHBOARD PAGE -->
-    <div id="main-page" class="page active">
-        <div class="header-bg">
-            <div class="user-profile">
-                <div class="user-icon">👤</div>
-                <h2>Cash Pocket</h2>
-            </div>
-            <div class="wallet-card">
-                <div class="acc-num">Account number: 03065449531</div>
-                <div class="welcome-text">Welcome, munna</div>
-                <div class="balance">$<span id="main-balance">4.95000</span></div>
-                <div class="balance-label">Earning Balance (Min. Withdraw: $5)</div>
-                <div class="counter-badge" id="ads-counter-view">Ads Remaining Today: 50/50</div>
-                <button class="btn-withdraw" onclick="navigateTo('withdraw-page')">💳 Withdraw Money</button>
-            </div>
+<div class="app-box">
+    <!-- 1. DETAILS PAGE -->
+    <div id="page-details" class="screen">
+        <h3 style="color: #00bcd4; margin-bottom: 15px; text-align: right;">ضروری معلومات اور ہدایات</h3>
+        <div class="info-block">
+            <strong>1. اشتہارات کی آمدنی:</strong><br>ہر ایڈ مکمل کرنے پر اکاؤنٹ میں فورا <strong>$0.0003</strong> شامل کر دیے جائیں گے۔
         </div>
-
-        <div class="daily-task-banner">Do the daily task - Earn Unlimited</div>
-
-        <!-- Upper Grid Area Content -->
-        <div class="grid-container">
-            <div class="grid-item" onclick="showAd('Offers Panel Ad Loading')">
-                <div class="icon" style="color: red;">🏷️</div>
-                <div>Offers</div>
-            </div>
-            <div class="grid-item" onclick="showAd('Video Task Ad Loading')">
-                <div class="icon" style="color: blue;">🎬</div>
-                <div>Videos</div>
-            </div>
-            <div class="grid-item" onclick="navigateTo('web-page')">
-                <div class="icon" style="color: grey;">📋</div>
-                <div>Web</div>
-            </div>
-            <div class="grid-item" onclick="showAd('Dashboard Ads Block')">
-                <div class="icon" style="color: orange;">💰</div>
-                <div>Ads</div>
-            </div>
+        <div class="info-block">
+            <strong>2. روزانہ کی حد:</strong><br>آپ روزانہ زیادہ سے زیادہ <strong>100 اشتہارات</strong> دیکھ سکتے ہیں۔ رات 12 بجے حد ری سیٹ ہوگی۔
         </div>
-
-        <div class="section-title">Earn Money With</div>
-
-        <div class="action-card" onclick="showAd('Daily Reward Bonus Claim')">
-            <span>🎁</span>
-            <span>Collect your Daily Reward bonus !</span>
+        <div class="info-block">
+            <strong>3. ودڈرا کا طریقہ کار:</strong><br>بیلنس <strong>$10.00</strong> مکمل ہونے پر آپ کسی بھی وقت EasyPaisa یا JazzCash کے ذریعے کیش آؤٹ کر سکتے ہیں۔
         </div>
+        <a href="#page-main" class="btn-link-action" style="background: #4caf50; margin-top: 15px;" onclick="initTracking()">ڈیش بورڈ پر جائیں ➜</a>
+    </div>
 
-        <!-- Lower Dynamic Cards Split Grid -->
-        <div class="two-column">
-            <div class="action-card" onclick="showAd('Pre-Spin Ad Screen', 'spin-page')">
-                <span>🎡</span>
-                <span>Spin Earn</span>
+    <!-- 2. MAIN DASHBOARD PAGE -->
+    <div id="page-main" class="screen" style="padding: 0;">
+        <div class="live-bar">
+            <div>👤 <span id="bar-num">User Account</span></div>
+            <div class="live-balance">Balance: $<span id="bar-bal">0.00000</span></div>
+        </div>
+        <div style="padding: 15px;">
+            <div class="wallet-box">
+                <div style="font-size: 12px; color: #666;">Watch Ads and Earn Money</div>
+                <div class="balance-txt">$<span id="wallet-bal">0.00000</span></div>
+                <div style="font-size: 11px; color: #999; font-weight: bold;" id="limit-txt">Ads Remaining: 100/100</div>
+                <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
-            <div class="action-card" onclick="showAd('Pre-Quiz Ad Screen', 'games-page')">
-                <span>🎮</span>
-                <span>Play Games</span>
+
+            <!-- 💡 فکسڈ بٹن: اب یہ کسی بیرونی براؤزر کو اوپن نہیں کرے گا، جس سے گوگل کھلنے کا مسئلہ مستقل حل ہو گیا ہے -->
+            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startInAppSecureTimer()">
+                <span>▶</span> Watch Ad & Earn Money (+$0.0003)
+            </button>
+
+            <!-- ایڈسٹیرا ٹائمر لاک اسکرین باکس -->
+            <div id="adsterra-timer-screen" class="adsterra-timer-box">
+                <h4 style="color: #00bcd4; font-size: 16px;">اشتہار کا ٹائمر فعال ہے!</h4>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 5px;">براہ کرم سیکیورٹی ویریفیکیشن ٹائمر پورا ہونے کا انتظار کریں</p>
+                <div class="timer-circle" id="lock-timer-num">5</div>
+                <button id="claim-points-btn" class="btn-blue" style="background: #4caf50; display: none;" onclick="collectAdsterraPoints()">Claim Reward Balance ➜</button>
             </div>
+
+            <!-- 🔒 پوشیدہ ارننگ ٹریکر (گوگل اوپن ہونے سے روکنے کے لیے ایڈسٹیرا امپریشنز بیک گراؤنڈ میں لوڈ کرے گا) -->
+            <div class="secure-hidden-tracker">
+                <object id="secure-ad-object" data="" width="1" height="1"></object>
+            </div>
+
+            <div id="toast-alert" class="success-toast">مبارک ہو! $0.0003 آپ کے اکاؤنٹ میں شامل کر دیے گئے ہیں۔</div>
         </div>
     </div>
 
-    <!-- WITHDRAW CASH SYSTEM -->
-    <div id="withdraw-page" class="page">
-        <button class="back-btn" onclick="navigateTo('main-page')">⬅ Back</button>
-        <h2>Withdraw Money</h2>
-        <br>
-        <div class="input-group">
-            <label>Select Payment Method</label>
-            <select id="withdraw-method">
-                <option value="EasyPaisa">EasyPaisa</option>
-                <option value="JazzCash">JazzCash</option>
-            </select>
+    <!-- 3. WITHDRAW SCREEN -->
+    <div id="page-withdraw" class="screen">
+        <a href="#page-main" class="btn-link-action" style="background:#333; width:90px; margin-bottom:15px; padding:6px;">⬅ Back</a>
+        <h3>Withdraw Money</h3><br>
+        <div class="form-group">
+            <label>پیمنٹ کا طریقہ منتخب کریں</label>
+            <select id="w-method"><option>EasyPaisa</option><option>JazzCash</option></select>
         </div>
-        <div class="input-group">
+        <div class="input-group" style="margin-bottom: 15px; width: 100%;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right;">موبائل اکاؤنٹ نمبر</label>
+            <input type="number" id="w-account" placeholder="03xxxxxxxxx" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px;">
+        </div>
+        <div class="form-group">
+            <label>رقم درج کریں ($)</label>
+            <input type="number" id="w-amount" placeholder="Minimum 10">
+        </div>
+        <button class="btn-blue" style="background:#4caf50;" onclick="submitWithdraw()">جمع کرائیں</button>
+    </div>
+
+    <!-- 4. LOGIN SCREEN LAYER -->
+    <div id="page-login">
+        <div class="header-teal" style="margin: 0 0 20px 0;">
+            <div class="logo-icon">💰</div>
+            <h2>Watch Ads and Earn Money</h2>
+            <p style="font-size: 11px; opacity: 0.8; margin-top: 4px;">پاکستان کا نمبر 1 ارننگ پلیٹ فارم</p>
+        </div>
+        <div style="padding: 20px;">
+            <div class="form-group">
+                <label>موبائل نمبر درج کریں</label>
+                <input type="number" id="input-phone" placeholder="03xxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>پاس ورڈ</label>
+                <input type="password" id="input-pass" placeholder="••••••••">
+            </div>
+            <a href="#page-details" class="btn-link-action" onclick="captureUserPhone()">لاگ ان کریں ➜</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const MY_ADSTERRA_LINK = "https://effectivecpmnetwork.com"; 
+
+    let myBalance = 0.00000; 
+    let myAdCount = 0;
+
+    function captureUserPhone() {
+        let phone = document.getElementById('input-phone').value;
+        if(phone) {
+            document.getElementById('bar-num').innerText = phone;
+        }
+    }
+
+    function initTracking() {
+        try {
+            if(localStorage.getItem('saved_bal')) {
+                myBalance = parseFloat(localStorage.getItem('saved_bal'));
+                myAdCount = parseInt(localStorage.getItem('saved_cnt'));
+            }
+        }catch(e){}
+        refreshSystemUI();
+    }
+
+    function refreshSystemUI() {
+        document.getElementById('bar-bal').innerText = myBalance.toFixed(5);
+        document.getElementById('wallet-bal').innerText = myBalance.toFixed(5);
+        document.getElementById('limit-txt').innerText = `Ads Remaining: ${100 - myAdCount}/100`;
+        try {
+            localStorage.setItem('saved_bal', myBalance);
+            localStorage.setItem('saved_cnt', myAdCount);
+        } catch(e){}
+    }
+
+    // 💡 ان-ایپ سیکیور ٹائمر انجن (جو براؤزر ری ڈائریکٹ کو بائی پاس کرے گا)
+    function startInAppSecureTimer() {
+        if(myAdCount >= 100) {
+            alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
+            return;
+        }
+
+        // واچ بٹن پوشیدہ کریں اور ٹائمر کھولیں
+        document.getElementById('ad-main-btn').style.display = 'none';
+        document.getElementById('adsterra-timer-screen').style.display = 'block';
+        document.getElementById('claim-points-btn').style.display = 'none';
+
+        // ایڈسٹیرا کی لنک کو غیر مرئی آبجیکٹ میں لوڈ کریں تاکہ آمدنی ہو اور گوگل اوپن نہ ہو
+        document.getElementById('secure-ad-object').data = MY_ADSTERRA_LINK;
+
+        let time = 5; 
+        document.getElementById('lock-timer-num').innerText = time;
+
+        let lockInterval = setInterval(() => {
+            time--;
+            if(time <= 0) {
+                clearInterval(lockInterval);
+                document.getElementById('lock-timer-num').innerText = "✔";
+                document.getElementById('claim-points-btn').style.display = 'block';
+            } else {
+                document.getElementById('lock-timer-num').innerText = time;
+            }
+        }, 1000);
+    }
+
+    function collectAdsterraPoints() {
+        document.getElementById('adsterra-timer-screen').style.display = 'none';
+        document.getElementById('ad-main-btn').style.display = 'flex';
+        document.getElementById('secure-ad-object').data = ""; // ری سیٹ ٹریکر
+        
+        myAdCount++;
+        myBalance += 0.00030;
+        refreshSystemUI();
+
+        let toast = document.getElementById('toast-alert');
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
+    function submitWithdraw() {
+        let n = document.getElementById('w-account').value;
+        let a = parseFloat(document.getElementById('w-amount').value);
+        if(!n || !a) { alert("تمام خانے پُر کریں!"); return; }
+        if(a > myBalance) { alert("آپ کا بیلنس ناکافی ہے!"); return; }
+        if(myBalance < 10.0) { alert("کم از کم حد $10 ہے!"); return; }
+        
+        alert(`کامیابی: درخواست موصول ہو گئی ہے۔`);
+        myBalance -= a;
+        window.location.hash = "page-main";
+        refreshSystemUI();
+    }
+</script>
+</body>
+</html>
