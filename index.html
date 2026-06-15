@@ -1,149 +1,338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watch & Earn - Pakistan's No.1 Platform</title>
+    <title>Cash Pocket Clone</title>
     <style>
-        :root {
-            --primary: #00c853;
-            --primary-dark: #009624;
-            --bg: #f8f9fa;
-            --surface: #ffffff;
-            --text: #212529;
-            --text-muted: #6c757d;
-            --border: #e9ecef;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-        
-        /* Right Aligned Header Styling */
-        .header { background: var(--surface); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .logo { font-size: 20px; font-weight: 800; color: var(--primary); order: 1; }
-        .menu-container { display: flex; align-items: center; gap: 15px; order: 2; }
-        .profile-btn { font-size: 22px; cursor: pointer; background: none; border: none; padding: 0; color: var(--text); }
-        .menu-icon { font-size: 24px; cursor: pointer; background: none; border: none; padding: 0; color: var(--text); }
-        
-        .container { max-width: 450px; margin: 0 auto; padding: 20px 15px; width: 100%; box-sizing: border-box; }
-        .card { background: var(--surface); padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
-        
-        .poster-banner { background: linear-gradient(135deg, #00c853, #00b0ff); color: white; padding: 30px 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 20px rgba(0,200,83,0.15); }
-        .poster-banner h1 { margin: 0; font-size: 32px; font-weight: 900; letter-spacing: 1px; }
-        .poster-banner p { margin: 5px 0 0 0; color: #ffffff; font-size: 14px; font-weight: 600; opacity: 0.9; letter-spacing: 2px; }
-        
-        .urdu-text { direction: rtl; text-align: center; font-size: 15px; color: #495057; line-height: 1.8; margin: 15px 0; font-weight: 500; }
-        .trusted-tag { font-size: 16px; color: #2b5c8f; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
-        
-        input { width: 100%; padding: 14px; margin: 12px 0; border-radius: 12px; border: 1.5px solid var(--border); background: #f1f3f5; text-align: center; box-sizing: border-box; font-size: 16px; }
-        input:focus { border-color: var(--primary); outline: none; background: var(--surface); }
-        button, .ad-link-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: bold; display: inline-block; text-decoration: none; box-sizing: border-box; text-align: center; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.2); }
-        
-        .wallet-box { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 30px 20px; border-radius: 24px; font-weight: bold; text-align: center; box-shadow: 0 10px 25px rgba(56, 239, 125, 0.2); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-        .stat-item { background: var(--surface); padding: 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; color: #6c757d; text-align: center; }
-        .stat-item strong { display: block; font-size: 16px; color: var(--text); margin-top: 4px; }
-        
-        /* Sidebar Dropdown Styling */
-        .sidebar { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: var(--surface); box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 10000; transition: 0.3s; padding: 30px 20px; box-sizing: border-box; border-left: 1px solid var(--border); }
-        .sidebar.active { right: 0; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 9999; display: none; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); padding-top: 100px; z-index: 99999; backdrop-filter: blur(4px); }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            min-height: 800px;
+        }
+
+        .page {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .header-bg {
+            background-color: #00bcd4;
+            padding: 20px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .wallet-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .acc-num { color: #666; font-size: 13px; }
+        .welcome-text { font-size: 18px; font-weight: bold; margin: 5px 0; }
+        .balance { font-size: 28px; font-weight: bold; color: #00bcd4; }
+        .balance-label { font-size: 12px; color: #999; }
+
+        .btn-withdraw {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 2px solid #4caf50;
+            color: #4caf50;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .daily-task-banner {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .grid-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 10px 5px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .grid-item .icon { font-size: 24px; margin-bottom: 5px; }
+
+        .section-title {
+            color: #777;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .action-card {
+            background: #00bcd4;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: #333;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        /* Input Forms formatting */
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Ad Popups overlays simulation */
+        .ad-modal {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .ad-box {
+            background: #222;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ff9800;
+        }
+
+        /* Spin wheel graphic design */
+        #wheel-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+        }
+        #wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid #333;
+            transition: transform 3s ease-out;
+            background: conic-gradient(
+                #ffc107 0deg 60deg, #ff5722 60deg 120deg, 
+                #4caf50 120deg 180deg, #00bcd4 180deg 240deg, 
+                #9c27b0 240deg 300deg, #e91e63 300deg 360deg
+            );
+        }
+
+        /* Quiz Box structure elements */
+        .quiz-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin-top: 15px;
+        }
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .counter-badge {
+            background: #ff5722;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header bar with right aligned buttons -->
-    <div class="header">
-        <div class="logo">🍀 Watch & Earn</div>
-        <div class="menu-container">
-            <button class="profile-btn" id="profileIconBtn">👤</button>
-            <button class="menu-icon" id="openMenuBtn">☰</button>
+<div class="phone-container">
+
+    <!-- MAIN DASHBOARD PAGE -->
+    <div id="main-page" class="page active">
+        <div class="header-bg">
+            <div class="user-profile">
+                <div class="user-icon">👤</div>
+                <h2>Cash Pocket</h2>
+            </div>
+            <div class="wallet-card">
+                <div class="acc-num">Account number: 03065449531</div>
+                <div class="welcome-text">Welcome, munna</div>
+                <div class="balance">$<span id="main-balance">4.95000</span></div>
+                <div class="balance-label">Earning Balance (Min. Withdraw: $5)</div>
+                <div class="counter-badge" id="ads-counter-view">Ads Remaining Today: 50/50</div>
+                <button class="btn-withdraw" onclick="navigateTo('withdraw-page')">💳 Withdraw Money</button>
+            </div>
+        </div>
+
+        <div class="daily-task-banner">Do the daily task - Earn Unlimited</div>
+
+        <!-- Upper Grid Area Content -->
+        <div class="grid-container">
+            <div class="grid-item" onclick="showAd('Offers Panel Ad Loading')">
+                <div class="icon" style="color: red;">🏷️</div>
+                <div>Offers</div>
+            </div>
+            <div class="grid-item" onclick="showAd('Video Task Ad Loading')">
+                <div class="icon" style="color: blue;">🎬</div>
+                <div>Videos</div>
+            </div>
+            <div class="grid-item" onclick="navigateTo('web-page')">
+                <div class="icon" style="color: grey;">📋</div>
+                <div>Web</div>
+            </div>
+            <div class="grid-item" onclick="showAd('Dashboard Ads Block')">
+                <div class="icon" style="color: orange;">💰</div>
+                <div>Ads</div>
+            </div>
+        </div>
+
+        <div class="section-title">Earn Money With</div>
+
+        <div class="action-card" onclick="showAd('Daily Reward Bonus Claim')">
+            <span>🎁</span>
+            <span>Collect your Daily Reward bonus !</span>
+        </div>
+
+        <!-- Lower Dynamic Cards Split Grid -->
+        <div class="two-column">
+            <div class="action-card" onclick="showAd('Pre-Spin Ad Screen', 'spin-page')">
+                <span>🎡</span>
+                <span>Spin Earn</span>
+            </div>
+            <div class="action-card" onclick="showAd('Pre-Quiz Ad Screen', 'games-page')">
+                <span>🎮</span>
+                <span>Play Games</span>
+            </div>
         </div>
     </div>
 
-    <div class="overlay" id="menuOverlay"></div>
-
-    <!-- Side Menu Drawer -->
-    <div class="sidebar" id="sideMenu">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px;">
-            <h3 style="margin: 0; font-size: 18px;">👤 My Account</h3>
-            <button style="width: auto; padding: 5px 10px; background: #e9ecef; color: #495057; border: none; border-radius: 5px;" id="closeMenuBtn">✕</button>
+    <!-- WITHDRAW CASH SYSTEM -->
+    <div id="withdraw-page" class="page">
+        <button class="back-btn" onclick="navigateTo('main-page')">⬅ Back</button>
+        <h2>Withdraw Money</h2>
+        <br>
+        <div class="input-group">
+            <label>Select Payment Method</label>
+            <select id="withdraw-method">
+                <option value="EasyPaisa">EasyPaisa</option>
+                <option value="JazzCash">JazzCash</option>
+            </select>
         </div>
-        <p style="margin: 10px 0;">Mobile: <strong id="userPhoneDisplay">User</strong></p>
-        <p style="color:var(--primary); font-weight:bold; margin: 5px 0;">Status: Verified Member</p>
-        <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-        <p style="font-size: 14px; color: var(--text-muted); cursor: pointer;">⚙️ Profile Settings</p>
-        <p style="font-size: 14px; color: var(--text-muted); cursor: pointer;">🔒 Security Settings</p>
-        <button id="logoutBtn" style="background: #dc3545; margin-top: 40px;" onclick="location.reload();">🔄 Logout Account</button>
-    </div>
-
-    <div class="container">
-        
-        <!-- 1. AUTH / LOGIN SCREEN -->
-        <div id="authScreen">
-            <div class="poster-banner">
-                <h1>WATCH & EARN</h1>
-                <p>PLAY ADS & GET PAID</p>
-            </div>
-
-            <div class="card">
-                <div class="urdu-text">
-                    یہ ایپ آپ کو روزانہ 100 ایڈز دیکھنے کا موقع دیتی ہے۔ ہر ایڈ مکمل دیکھنے پر آپ کو <strong>$0.030</strong> کا ریوارڈ ملے گا۔ جیسے ہی آپ کا بیلنس <strong>$5.00</strong> ہو جائے گا، آپ ایزی پیسہ یا جیز کیش کے ذریعے فوری رقم نکلوا سکتے ہیں۔
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">Total Members<strong>42,810+</strong></div>
-                    <div class="stat-item">Total Paid Out<strong>$14,940+</strong></div>
-                </div>
-
-                <input type="tel" id="phoneInput" placeholder="Enter Mobile Number">
-                <input type="password" id="passInput" placeholder="Choose Account Password">
-                <button type="button" id="authBtn" style="margin-top: 15px;">Get Started / Log In</button>
-                
-                <div class="trusted-tag">پاکستان کی سب سے قابلِ بھروسہ ایپ 🇵🇰</div>
-            </div>
-        </div>
-
-        <!-- 2. SYSTEM MAIN DASHBOARD -->
-        <div id="mainDashboard" style="display: none;">
-            <div class="wallet-box">
-                <p style="margin: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Available Balance</p>
-                <h1 style="margin: 5px 0 0 0; font-size: 44px; font-weight: 800;">$<span id="userBalance">0.00000</span></h1>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-item">Today's Ads Left<strong id="adsLeft" style="color: var(--primary);">100</strong></div>
-                <div class="stat-item">Reward Rate<strong style="color: var(--primary); font-size: 15px;">$0.030 / Ad</strong></div>
-            </div>
-            <div class="card" style="padding: 15px;">
-                <button type="button" id="adAnchor" class="ad-link-btn" style="background: #ffcc00; color: #121212;" onclick="openAdAndShowCaptcha()">
-                    🎥 Play Ad & Earn Money
-                </button>
-            </div>
-            
-            <!-- Always Visible Withdraw Section -->
-            <div id="withdrawSection" class="card" style="display: block; background: #f1fff5; border-color: var(--primary);">
-                <h3 style="color: var(--primary); margin-top: 0;">💳 Withdraw Payout Option</h3>
-                <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;">نیچے سے اپنا اکاؤنٹ منتخب کریں (حد: $5):</p>
-                <button id="easyPaisaBtn" style="background: #28a745; margin-bottom: 10px;" onclick="alert('Withdraw threshold is $5.00')">Withdraw via EasyPaisa</button>
-                <button id="jazzCashBtn" style="background: #e65100;" onclick="alert('Withdraw threshold is $5.00')">Withdraw via JazzCash</button>
-            </div>
-        </div>
-
-        <!-- 3. CAPTCHA OVERLAY MODAL -->
-        <div id="adModal" class="modal">
-            <div class="card" style="max-width: 380px; margin: 0 auto;">
-                <h3 style="color: var(--primary); margin-top: 0;">Unlock Earnings</h3>
-                <p style="font-size: 14px; color: var(--text-muted);">Enter the correct answer to claim your reward credit.</p>
-                <div style="background: #f1f3f5; padding: 20px; border-radius: 15px; border: 1px solid var(--border);">
-                    <p id="captchaQuestion" style="font-size: 26px; font-weight: bold; color: #212529; margin: 10px 0;">+ = ?</p>
-                    <input type="number" id="captchaInput" placeholder="Your Answer" style="background: white; margin-bottom: 0;">
-                </div>
-                <button id="claimBtn" style="margin-top: 15px;">Claim Credit Reward</button>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        const safeStorage = {
-            getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
-            setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
+        <div class="input-group">
