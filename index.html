@@ -8,14 +8,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #f0f4f8; display: flex; justify-content: center; padding: 10px; font-family: sans-serif; }
         .app-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-height: 750px; position: relative; display: flex; flex-direction: column; }
-        
-        /* 100٪ گارنٹیڈ خالص HTML صفحات کا انتظام جو براؤزر کبھی بلاک نہیں کر سکتا */
         .screen { display: none; padding: 20px; width: 100%; height: 100%; }
         #page-login { display: block; }
         :target { display: block !important; }
         :target ~ #page-login { display: none !important; }
         :target ~ .screen { display: none; }
-        
         .header-teal { background: #00bcd4; color: white; text-align: center; padding: 30px 10px; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
         .logo-icon { font-size: 50px; margin-bottom: 10px; }
         .live-bar { background: #00bcd4; color: white; padding: 12px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; width: 100%; }
@@ -25,12 +22,16 @@
         .form-group { margin-bottom: 15px; text-align: right; }
         .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color: #333; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
-        
-        /* ان بلاک ایبل کلاسک لنکس برائے ارننگ */
         .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
         .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
-        .watch-ad-designer-link { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
+        .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
+        
+        /* 🆕 ان-ایپ پروفیشنل ویڈیو پلیئر اسٹائلز */
+        .video-player-container { display: none; background: #000000; padding: 15px; border-radius: 15px; margin-top: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative; }
+        .video-box-element { width: 100%; height: 180px; background: #1e293b; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #38bdf8; font-weight: bold; position: relative; overflow: hidden; border: 1px solid #334155; }
+        .video-progress-bar { position: absolute; bottom: 0; left: 0; height: 5px; background: #00bcd4; width: 0%; transition: width 1s linear; }
+        .ad-brand-badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.6); color: #fff; padding: 3px 8px; border-radius: 5px; font-size: 11px; }
         .adsterra-native-banner-slot { width: 100%; min-height: 90px; margin-top: auto; padding: 10px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; }
     </style>
 </head>
@@ -50,10 +51,22 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- 💡 خالص HTML لنک: اب یہ کلک ہوتے ہی صرف اشتہار کھولے گا، کروم اب اسے پاپ اپ بلاکر سے گوگل پر نہیں بھیج پائے گا -->
-            <a href="https://effectivecpmnetwork.com" target="_blank" class="watch-ad-designer-link" onclick="claimPureHtmlEarning()">
+            <!-- اشتہار پلے کرنے کا مین بٹن -->
+            <button class="watch-ad-designer-btn" id="ad-play-trigger-btn" onclick="startInAppAdFlow()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
-            </a>
+            </button>
+
+            <!-- ان-ایپ ویڈیو پلیئر باکس -->
+            <div id="video-player-box" class="video-player-container">
+                <div class="video-box-element">
+                    <span class="ad-brand-badge">Premium Ad</span>
+                    <span style="font-size: 35px; margin-bottom: 5px;">🎬</span>
+                    <div id="video-status-text">Loading Ad Campaign...</div>
+                    <div id="video-timer-display" style="font-size: 13px; color: #94a3b8; margin-top: 5px;">5 Seconds Remaining</div>
+                    <div class="video-progress-bar" id="video-progress"></div>
+                </div>
+                <button id="claim-ad-reward-btn" class="btn-blue" style="margin-top: 12px; background: #00bcd4; width: 100%; padding: 10px; color: white; border: none; border-radius: 8px; font-weight: bold;" onclick="collectVideoAdReward()">Claim Reward Points ➜</button>
+            </div>
 
             <div id="toast-alert" class="success-toast">مبارک ہو! $0.0003 آپ کے اکاؤنٹ میں شامل کر دیے گئے ہیں۔</div>
         </div>
@@ -108,6 +121,7 @@
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
+    const MY_ADSTERRA_LINK = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -137,19 +151,56 @@
         } catch(e){}
     }
 
-    function claimPureHtmlEarning() {
+    // لائیو ویڈیو اور بیک گراؤنڈ اشتہار کا مربوط فلو
+    function startInAppAdFlow() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
-            event.preventDefault();
             return;
         }
+
+        // 💡 بیک گراؤنڈ ارننگ ٹرگر: اصلی اشتہار نئے محفوظ پیج پر اوپن کریں
+        if(MY_ADSTERRA_LINK !== "") {
+            window.open(MY_ADSTERRA_LINK, '_blank');
+        }
+
+        // فرنٹ اینڈ مینیجر کو ویڈیو پلیئر پر شفٹ کریں
+        document.getElementById('ad-play-trigger-btn').style.display = 'none';
+        document.getElementById('video-player-box').style.display = 'block';
+        document.getElementById('claim-ad-reward-btn').style.display = 'none';
+        document.getElementById('video-status-text').innerText = "Streaming Video Ad...";
+        
+        let progress = document.getElementById('video-progress');
+        progress.style.width = '0%';
+
+        let time = 5; 
+        document.getElementById('video-timer-display').innerText = `${time} Seconds Remaining`;
+        
+        setTimeout(() => { progress.style.width = '100%'; }, 50);
+
+        let videoTimer = setInterval(() => {
+            time--;
+            if(time <= 0) {
+                clearInterval(videoTimer);
+                document.getElementById('video-status-text').innerText = "Video Finished!";
+                document.getElementById('video-timer-display').innerText = "You can now claim your reward.";
+                document.getElementById('claim-ad-reward-btn').style.display = 'block';
+            } else {
+                document.getElementById('video-timer-display').innerText = `${time} Seconds Remaining`;
+            }
+        }, 1000);
+    }
+
+    function collectVideoAdReward() {
         myAdCount++;
         myBalance += 0.00030;
         refreshSystemUI();
 
+        document.getElementById('video-player-box').style.display = 'none';
+        document.getElementById('ad-play-trigger-btn').style.display = 'flex';
+
         let toast = document.getElementById('toast-alert');
         toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
     }
 
     function submitWithdraw() {
