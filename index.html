@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Ads and Earn Money</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #f0f4f8; display: flex; justify-content: center; padding: 10px; font-family: sans-serif; }
+        .app-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-height: 750px; position: relative; display: flex; flex-direction: column; }
+        .screen { display: none; padding: 20px; width: 100%; height: 100%; }
+        #page-login { display: block; }
+        :target { display: block !important; }
+        :target ~ #page-login { display: none !important; }
+        :target ~ .screen { display: none; }
+        .header-teal { background: #00bcd4; color: white; text-align: center; padding: 30px 10px; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
+        .logo-icon { font-size: 50px; margin-bottom: 10px; }
+        .live-bar { background: #00bcd4; color: white; padding: 12px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; width: 100%; }
+        .live-balance { background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 10px; }
+        .wallet-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 15px; padding: 15px; margin-top: 15px; text-align: center; }
+        .balance-txt { font-size: 28px; font-weight: bold; color: #00bcd4; margin: 5px 0; }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color: #333; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
+        .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
+        .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
+        .watch-ad-designer-link { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
+        .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
+        .premium-native-ad-box { width: 100%; min-height: 120px; margin-top: auto; padding: 15px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="app-box">
+
+    <!-- 1. MAIN DASHBOARD PAGE -->
+    <div id="page-main" class="screen" style="padding: 0;">
+        <div class="live-bar">
+            <div>👤 <span id="bar-num">User Account</span></div>
+            <div class="live-balance">Balance: $<span id="bar-bal">0.00000</span></div>
+        </div>
+        <div style="padding: 15px;">
+            <div class="wallet-card">
+                <div style="font-size: 12px; color: #666;">Watch Ads and Earn Money</div>
+                <div class="balance-txt">$<span id="wallet-bal">0.00000</span></div>
+                <div style="font-size: 11px; color: #999; font-weight: bold;" id="limit-txt">Ads Remaining: 100/100</div>
+                <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
+            </div>
+
+            <a href="https://effectivecpmnetwork.com" target="_blank" class="watch-ad-designer-link" onclick="claimDirectAdsterraEarning()">
+                <span>▶</span> Watch Ad & Earn Money (+$0.0003)
+            </a>
+
+            <div id="toast-alert" class="success-toast">مبارک ہو! $0.0003 آپ کے اکاؤنٹ میں شامل کر دیے گئے ہیں۔</div>
+        </div>
+    </div>
+
+    <!-- 2. WITHDRAW SCREEN -->
+    <div id="page-withdraw" class="screen">
+        <a href="#page-main" class="btn-link-action" style="background:#333; width:90px; margin-bottom:15px; padding:6px;">⬅ Back</a>
+        <h3>Withdraw Money</h3><br>
+        <div class="form-group">
+            <label>پیمنٹ کا طریقہ منتخب کریں</label>
+            <select id="w-method"><option>EasyPaisa</option><option>JazzCash</option></select>
+        </div>
+        <div class="input-group" style="margin-bottom: 15px; width: 100%;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color:#333;">موبائل اکاؤنٹ نمبر</label>
+            <input type="number" id="w-account" placeholder="03xxxxxxxxx" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px;">
+        </div>
+        <div class="form-group">
+            <label>رقم درج کریں ($)</label>
+            <input type="number" id="w-amount" placeholder="Minimum 10">
+        </div>
+        <button class="btn-blue" style="background:#4caf50;" onclick="submitWithdraw()">جمع کرائیں</button>
+    </div>
+
+    <!-- 3. LOGIN SCREEN LAYER -->
+    <div id="page-login">
+        <div class="header-teal" style="margin: 0 0 20px 0;">
+            <div class="logo-icon">💰</div>
+            <h2>Watch Ads and Earn Money</h2>
+            <p style="font-size: 11px; opacity: 0.8; margin-top: 4px;">پاکستان کا نمبر 1 ارننگ پلیٹ فارم</p>
+        </div>
+        <div style="padding: 20px;">
+            <div class="form-group">
+                <label>موبائل نمبر درج کریں</label>
+                <input type="number" id="input-phone" placeholder="03xxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>پاس ورڈ</label>
+                <input type="password" id="input-pass" placeholder="••••••••">
+            </div>
+            <a href="#page-main" class="btn-link-action" onclick="handleDirectAppLogin()">لاگ ان کریں ➜</a>
+        </div>
+    </div>
+
+    <div class="premium-native-ad-box">
+        <span style="color: #cbd5e1; font-size: 11px; display: block; margin-bottom: 5px;">Sponsored Advertisement</span>
+    </div>
+
+</div>
+
+<script src="https://effectivecpmnetwork.com"></script>
+
+<script>
+    let myBalance = 0.00000; 
+    let myAdCount = 0;
+
+    function handleDirectAppLogin() {
+        let phone = document.getElementById('input-phone').value;
+        if(phone) {
+            document.getElementById('bar-num').innerText = phone;
+        }
+        initTracking();
+    }
+
+    function initTracking() {
+        try {
+            if(localStorage.getItem('saved_bal')) {
+                myBalance = parseFloat(localStorage.getItem('saved_bal'));
+                myAdCount = parseInt(localStorage.getItem('saved_cnt'));
+            }
+        }catch(e){}
+        refreshSystemUI();
+    }
+
+    function refreshSystemUI() {
+        document.getElementById('bar-bal').innerText = myBalance.toFixed(5);
+        document.getElementById('wallet-bal').innerText = myBalance.toFixed(5);
+        document.getElementById('limit-txt').innerText = `Ads Remaining: ${100 - myAdCount}/100`;
+        try {
+            localStorage.setItem('saved_bal', myBalance);
+            localStorage.setItem('saved_cnt', myAdCount);
+        } catch(e){}
+    }
+
+    function claimDirectAdsterraEarning() {
+        if(myAdCount >= 100) {
+            alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
+            event.preventDefault();
+            return;
+        }
+        myAdCount++;
+        myBalance += 0.00030;
+        refreshSystemUI();
+
+        let toast = document.getElementById('toast-alert');
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    function submitWithdraw() {
+        let n = document.getElementById('w-account').value;
+        let a = parseFloat(document.getElementById('w-amount').value);
+        if(!n || !a) { alert("تمام خانے پُر کریں!"); return; }
+        if(myBalance < 10.0) { alert("کم از کم حد $10 ہے!"); return; }
+        if(a > myBalance) { alert("آپ کا بیلنس ناکافی ہے!"); return; }
+        
+        alert("کامیابی: درخواست موصول ہو گئی ہے۔");
+        myBalance -= a;
+        window.location.hash = "page-main";
+        refreshSystemUI();
+    }
+</script>
+</body>
+</html>
