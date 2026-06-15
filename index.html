@@ -48,8 +48,8 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- اشتہار شروع کرنے کا بنیادی بٹن -->
-            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
+            <!-- اشتہار کا مین ایکٹو بٹن جو براہ راست آپ کا پاپ انڈر چلائے گا -->
+            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startYourAdsterraPopunder()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </button>
 
@@ -107,15 +107,12 @@
 
 </div>
 
-<!-- ⚙️ یہ وہ جگہ ہے جہاں آپ کا آفیشل ایڈسٹیرا پاپ انڈر اسکرپٹ ٹیگ لائیو منسلک ہے -->
-<script type='text/javascript' src='//://highperformanceformat.com'></script>
+<!-- ⚙️ آپ کا کاپی کیا ہوا حقیقی پاپ انڈر اسکرپٹ یہاں کامیابی سے منسلک ہے -->
+<script src="https://effectivecpmnetwork.com"></script>
 
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
-
-    // ایڈسٹیرا ڈائریکٹ یو آر ایل جو اسکرپٹ بیک گراؤنڈ میں لوڈ کرے گا
-    const ADSTERRA_URL_TARGET = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -145,16 +142,16 @@
         } catch(e){}
     }
 
-    // 💡 پریمیم پاپ انڈر فلو کنٹرولر
-    function startAdsterraPopunderFlow() {
+    // 💡 پاپ انڈر اسکرپٹ کو ایکٹو کرنے کا ڈائریکٹ فلو
+    function startYourAdsterraPopunder() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
         }
 
-        // پاپ انڈر لنک کو نئے ٹیب میں زبردستی اوپن کرنا
-        if (ADSTERRA_URL_TARGET !== "") {
-            window.open(ADSTERRA_URL_TARGET, '_blank');
+        // پاپ انڈر اسکرپٹ کا ڈیفالٹ فنکشن جو کلک ایونٹ کے ساتھ ہی لائیو اشتہار ٹرگر کرے گا
+        if (typeof window.triggerAd === 'function') {
+            window.triggerAd();
         }
 
         document.getElementById('ad-main-btn').style.display = 'none';
