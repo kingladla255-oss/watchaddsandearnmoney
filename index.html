@@ -7,7 +7,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #f0f4f8; display: flex; justify-content: center; padding: 10px; font-family: sans-serif; }
-        .app-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-height: 750px; position: relative; }
+        .app-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-height: 750px; position: relative; display: flex; flex-direction: column; }
         .screen { display: none; padding: 20px; width: 100%; height: 100%; }
         #page-login { display: block; }
         :target { display: block !important; }
@@ -30,6 +30,9 @@
         .video-graphic-loader { width: 50px; height: 50px; border: 4px solid rgba(0,188,212,0.1); border-left-color: #00bcd4; border-radius: 50%; animation: play-rotate 1s linear infinite; margin: 15px auto; }
         @keyframes play-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .timer-circle { width: 70px; height: 70px; border: 4px solid #ff9800; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; margin: 15px auto; color: #ff9800; }
+        
+        /* 🆕 مستقل نیٹو بینر اشتہار کا باکس اسٹائل */
+        .adsterra-native-banner-slot { width: 100%; min-height: 90px; margin-top: auto; padding: 10px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
@@ -48,16 +51,15 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- اشتہار کا مین ایکٹو بٹن جو براہ راست آپ کا پاپ انڈر چلائے گا -->
-            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startYourAdsterraPopunder()">
+            <!-- اشتہار شروع کرنے کا پریمیم ڈیزائنر بٹن -->
+            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </button>
 
             <!-- اینیمیٹڈ ان-ایپ ویڈیو اشتہار ونڈو -->
             <div id="adsterra-video-screen" class="adsterra-video-box">
                 <div class="video-graphic-loader"></div>
-                <h4 style="color: #00bcd4; font-size: 16px;">Loading Ad Campaign...</h4>
-                <p style="font-size: 12px; color: #94a3b8; margin-top: 5px;">براہ کرم اشتہار کا ڈیٹا سنک ہونے تک انتظار کریں</p>
+                <h4 style="color: #00bcd4; font-size: 16px; margin-bottom: 10px;">Ad Stream Active</h4>
                 <div class="timer-circle" id="lock-timer-num">5</div>
                 <button id="claim-points-btn" class="btn-blue" style="background: #4caf50; display: none;" onclick="collectAdsterraPoints()">Claim Reward Balance ➜</button>
             </div>
@@ -75,7 +77,7 @@
             <select id="w-method"><option>EasyPaisa</option><option>JazzCash</option></select>
         </div>
         <div class="input-group" style="margin-bottom: 15px; width: 100%;">
-            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right;">موبائل اکاؤنٹ نمبر</label>
+            <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color:#333;">موبائل اکاؤنٹ نمبر</label>
             <input type="number" id="w-account" placeholder="03xxxxxxxxx" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px;">
         </div>
         <div class="form-group">
@@ -105,14 +107,23 @@
         </div>
     </div>
 
-</div>
+    <!-- 🆕 مستقل نیٹو بینر اشتہار کا لائیو سلاٹ (یہاں تصویر والے اشتہارات شو ہوں گے) -->
+    <div class="adsterra-native-banner-slot">
+        <span style="color: #cbd5e1; font-size: 11px; display: block; margin-bottom: 5px;">Sponsored Advertisement</span>
+        
+        <!-- ⚙️ ایڈسٹیرا پینل سے حاصل کردہ Native Banner یا Native Ads کا پورا اسکرپٹ کوڈ اس لائن کے نیچے پیسٹ کریں -->
+        
+    </div>
 
-<!-- ⚙️ آپ کا کاپی کیا ہوا حقیقی پاپ انڈر اسکرپٹ یہاں کامیابی سے منسلک ہے -->
+</div> <!-- app-box end -->
+
+<!-- ⚙️ آپ کا کاپی کیا ہوا حقیقی پاپ انڈر اسکرپٹ یہاں کامیابی سے رینڈرڈ ہے -->
 <script src="https://effectivecpmnetwork.com"></script>
 
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
+    const ADSTERRA_URL_FALLBACK = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -142,17 +153,14 @@
         } catch(e){}
     }
 
-    // 💡 پاپ انڈر اسکرپٹ کو ایکٹو کرنے کا ڈائریکٹ فلو
-    function startYourAdsterraPopunder() {
+    function startAdsterraPopunderFlow() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
         }
 
-        // پاپ انڈر اسکرپٹ کا ڈیفالٹ فنکشن جو کلک ایونٹ کے ساتھ ہی لائیو اشتہار ٹرگر کرے گا
-        if (typeof window.triggerAd === 'function') {
-            window.triggerAd();
-        }
+        // پاپ انڈر اشتہار پلے کرنے کے لیے لنک ٹرگر کریں
+        window.open(ADSTERRA_URL_FALLBACK, '_blank');
 
         document.getElementById('ad-main-btn').style.display = 'none';
         document.getElementById('adsterra-video-screen').style.display = 'block';
