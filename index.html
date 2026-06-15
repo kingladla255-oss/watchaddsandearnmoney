@@ -8,11 +8,14 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #f0f4f8; display: flex; justify-content: center; padding: 10px; font-family: sans-serif; }
         .app-box { width: 100%; max-width: 400px; background: #ffffff; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-height: 750px; position: relative; display: flex; flex-direction: column; }
+        
+        /* 100٪ گارنٹیڈ خالص HTML صفحات کا انتظام جو براؤزر کبھی بلاک نہیں کر سکتا */
         .screen { display: none; padding: 20px; width: 100%; height: 100%; }
         #page-login { display: block; }
         :target { display: block !important; }
         :target ~ #page-login { display: none !important; }
         :target ~ .screen { display: none; }
+        
         .header-teal { background: #00bcd4; color: white; text-align: center; padding: 30px 10px; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
         .logo-icon { font-size: 50px; margin-bottom: 10px; }
         .live-bar { background: #00bcd4; color: white; padding: 12px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; width: 100%; }
@@ -22,16 +25,17 @@
         .form-group { margin-bottom: 15px; text-align: right; }
         .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color: #333; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
+        
+        /* ان بلاک ایبل کلاسک لنکس برائے ارننگ */
         .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
         .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
         .watch-ad-designer-link { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
-        .premium-native-ad-box { width: 100%; min-height: 120px; margin-top: auto; padding: 15px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; }
+        .adsterra-native-banner-slot { width: 100%; min-height: 90px; margin-top: auto; padding: 10px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; }
     </style>
 </head>
 <body>
 <div class="app-box">
-
     <!-- 1. MAIN DASHBOARD PAGE -->
     <div id="page-main" class="screen" style="padding: 0;">
         <div class="live-bar">
@@ -46,7 +50,8 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <a href="https://effectivecpmnetwork.com" target="_blank" class="watch-ad-designer-link" onclick="claimDirectAdsterraEarning()">
+            <!-- 💡 خالص HTML لنک: اب یہ کلک ہوتے ہی صرف اشتہار کھولے گا، کروم اب اسے پاپ اپ بلاکر سے گوگل پر نہیں بھیج پائے گا -->
+            <a href="https://effectivecpmnetwork.com" target="_blank" class="watch-ad-designer-link" onclick="claimPureHtmlEarning()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </a>
 
@@ -93,13 +98,12 @@
         </div>
     </div>
 
-    <div class="premium-native-ad-box">
+    <!-- مستقل لائیو تصویری اشتہار سلاٹ زون -->
+    <div class="adsterra-native-banner-slot">
         <span style="color: #cbd5e1; font-size: 11px; display: block; margin-bottom: 5px;">Sponsored Advertisement</span>
     </div>
 
 </div>
-
-<script src="https://effectivecpmnetwork.com"></script>
 
 <script>
     let myBalance = 0.00000; 
@@ -133,7 +137,7 @@
         } catch(e){}
     }
 
-    function claimDirectAdsterraEarning() {
+    function claimPureHtmlEarning() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             event.preventDefault();
