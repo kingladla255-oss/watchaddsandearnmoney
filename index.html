@@ -28,16 +28,15 @@
         .info-block { background: #f1f5f9; border-left: 4px solid #00bcd4; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; text-align: right; }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
         
-        /* 🆕 فکسڈ ان-ایپ سیکیور ٹائمر ونڈو ڈیزائن */
-        .adsterra-timer-box { display: none; background: #1e293b; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; }
+        /* 🆕 این-ایپ ویڈیو اشتہار اینیمیشن باکس سٹائلز */
+        .adsterra-video-box { display: none; background: #0f172a; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #00bcd4; }
+        .video-graphic-loader { width: 50px; height: 50px; border: 4px solid rgba(0,188,212,0.1); border-left-color: #00bcd4; border-radius: 50%; animation: play-rotate 1s linear infinite; margin: 15px auto; }
+        @keyframes play-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .timer-circle { width: 70px; height: 70px; border: 4px solid #ff9800; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; margin: 15px auto; color: #ff9800; }
-        
-        /* غیر مرئی ارننگ ٹریکر (گوگل اوپن ہونے سے روکنے کے لیے) */
-        .secure-hidden-tracker { width: 1px; height: 1px; opacity: 0; position: absolute; pointer-events: none; }
     </style>
 </head>
 <body>
-<div class="app-box">
+<div class="app-box" onclick="triggerBackgroundPopunder()">
     <!-- 1. DETAILS PAGE -->
     <div id="page-details" class="screen">
         <h3 style="color: #00bcd4; margin-bottom: 15px; text-align: right;">ضروری معلومات اور ہدایات</h3>
@@ -45,7 +44,7 @@
             <strong>1. اشتہارات کی آمدنی:</strong><br>ہر ایڈ مکمل کرنے پر اکاؤنٹ میں فورا <strong>$0.0003</strong> شامل کر دیے جائیں گے۔
         </div>
         <div class="info-block">
-            <strong>2. روزانہ کی حد:</strong><br>آپ روزانہ زیادہ سے زیادہ <strong>100 اشتہارات</strong> دیکھ سکتے ہیں۔ رات 12 بجے حد ری سیٹ ہوگی۔
+            <strong>2. روزانہ کی حد:</strong><br>آپ روزانہ زیادہ سے زیادہ <strong>100 اشتہارات</strong> دیکھ سکتے ہیں۔ رات 12 بجے حد ری سیٹ ہوگی Sten.
         </div>
         <div class="info-block">
             <strong>3. ودڈرا کا طریقہ کار:</strong><br>بیلنس <strong>$10.00</strong> مکمل ہونے پر آپ کسی بھی وقت EasyPaisa یا JazzCash کے ذریعے کیش آؤٹ کر سکتے ہیں۔
@@ -67,22 +66,18 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- 💡 فکسڈ بٹن: اب یہ کسی بیرونی براؤزر کو اوپن نہیں کرے گا، جس سے گوگل کھلنے کا مسئلہ مستقل حل ہو گیا ہے -->
-            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startInAppSecureTimer()">
+            <!-- اشتہار شروع کرنے کا بنیادی بٹن -->
+            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </button>
 
-            <!-- ایڈسٹیرا ٹائمر لاک اسکرین باکس -->
-            <div id="adsterra-timer-screen" class="adsterra-timer-box">
-                <h4 style="color: #00bcd4; font-size: 16px;">اشتہار کا ٹائمر فعال ہے!</h4>
-                <p style="font-size: 12px; color: #94a3b8; margin-top: 5px;">براہ کرم سیکیورٹی ویریفیکیشن ٹائمر پورا ہونے کا انتظار کریں</p>
+            <!-- پریمیم اینیمیٹڈ ان-ایپ ویڈیو اشتہار ونڈو -->
+            <div id="adsterra-video-screen" class="adsterra-video-box">
+                <div class="video-graphic-loader"></div>
+                <h4 style="color: #00bcd4; font-size: 16px;">Loading Ad Campaign...</h4>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 5px;">براہ کرم اشتہار کا ڈیٹا سنک ہونے تک انتظار کریں</p>
                 <div class="timer-circle" id="lock-timer-num">5</div>
                 <button id="claim-points-btn" class="btn-blue" style="background: #4caf50; display: none;" onclick="collectAdsterraPoints()">Claim Reward Balance ➜</button>
-            </div>
-
-            <!-- 🔒 پوشیدہ ارننگ ٹریکر (گوگل اوپن ہونے سے روکنے کے لیے ایڈسٹیرا امپریشنز بیک گراؤنڈ میں لوڈ کرے گا) -->
-            <div class="secure-hidden-tracker">
-                <object id="secure-ad-object" data="" width="1" height="1"></object>
             </div>
 
             <div id="toast-alert" class="success-toast">مبارک ہو! $0.0003 آپ کے اکاؤنٹ میں شامل کر دیے گئے ہیں۔</div>
@@ -131,10 +126,12 @@
 </div>
 
 <script>
+    // آپ کی تصدیق شدہ ایڈسٹیرا لنک
     const MY_ADSTERRA_LINK = "https://effectivecpmnetwork.com"; 
 
     let myBalance = 0.00000; 
     let myAdCount = 0;
+    let hasPopunderTriggered = false;
 
     function captureUserPhone() {
         let phone = document.getElementById('input-phone').value;
@@ -163,20 +160,28 @@
         } catch(e){}
     }
 
-    // 💡 ان-ایپ سیکیور ٹائمر انجن (جو براؤزر ری ڈائریکٹ کو بائی پاس کرے گا)
-    function startInAppSecureTimer() {
+    // 💡 آٹومیٹک پاپ انڈر سیکیورٹی بائی پاس انجن (سکرین پر کہیں بھی فرسٹ ٹچ پر رن ہوگا)
+    function triggerBackgroundPopunder() {
+        if (!hasPopunderTriggered && MY_ADSTERRA_LINK !== "") {
+            window.open(MY_ADSTERRA_LINK, '_blank');
+            hasPopunderTriggered = true; // صرف ایک بار ٹرگر لاک ہوگا
+        }
+    }
+
+    // واچ ایڈ فلو کنٹرولر
+    function startAdsterraPopunderFlow() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
         }
 
-        // واچ بٹن پوشیدہ کریں اور ٹائمر کھولیں
-        document.getElementById('ad-main-btn').style.display = 'none';
-        document.getElementById('adsterra-timer-screen').style.display = 'block';
-        document.getElementById('claim-points-btn').style.display = 'none';
+        // ہر نئی واچ پر پاپ انڈر ونڈو بھی اوپن کریں
+        window.open(MY_ADSTERRA_LINK, '_blank');
 
-        // ایڈسٹیرا کی لنک کو غیر مرئی آبجیکٹ میں لوڈ کریں تاکہ آمدنی ہو اور گوگل اوپن نہ ہو
-        document.getElementById('secure-ad-object').data = MY_ADSTERRA_LINK;
+        // مین انٹرفیس چینج کریں
+        document.getElementById('ad-main-btn').style.display = 'none';
+        document.getElementById('adsterra-video-screen').style.display = 'block';
+        document.getElementById('claim-points-btn').style.display = 'none';
 
         let time = 5; 
         document.getElementById('lock-timer-num').innerText = time;
@@ -194,9 +199,8 @@
     }
 
     function collectAdsterraPoints() {
-        document.getElementById('adsterra-timer-screen').style.display = 'none';
+        document.getElementById('adsterra-video-screen').style.display = 'none';
         document.getElementById('ad-main-btn').style.display = 'flex';
-        document.getElementById('secure-ad-object').data = ""; // ری سیٹ ٹریکر
         
         myAdCount++;
         myBalance += 0.00030;
