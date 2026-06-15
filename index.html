@@ -17,7 +17,7 @@
         .logo-icon { font-size: 50px; margin-bottom: 10px; }
         .live-bar { background: #00bcd4; color: white; padding: 12px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; width: 100%; }
         .live-balance { background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 10px; }
-        .wallet-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 15px; padding: 15px; margin-top: 15px; text-align: center; }
+        .wallet-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 15px; padding: 15px; margin-top: 15px; text-align: center; }
         .balance-txt { font-size: 28px; font-weight: bold; color: #00bcd4; margin: 5px 0; }
         .form-group { margin-bottom: 15px; text-align: right; }
         .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; text-align: right; color: #333; }
@@ -25,10 +25,7 @@
         .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
         .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
         .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
-        .info-block { background: #f1f5f9; border-left: 4px solid #00bcd4; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 13px; line-height: 1.5; text-align: right; }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
-        
-        /* 🆕 این-ایپ ویڈیو اشتہار اینیمیشن باکس سٹائلز */
         .adsterra-video-box { display: none; background: #0f172a; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #00bcd4; }
         .video-graphic-loader { width: 50px; height: 50px; border: 4px solid rgba(0,188,212,0.1); border-left-color: #00bcd4; border-radius: 50%; animation: play-rotate 1s linear infinite; margin: 15px auto; }
         @keyframes play-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -36,30 +33,15 @@
     </style>
 </head>
 <body>
-<div class="app-box" onclick="triggerBackgroundPopunder()">
-    <!-- 1. DETAILS PAGE -->
-    <div id="page-details" class="screen">
-        <h3 style="color: #00bcd4; margin-bottom: 15px; text-align: right;">ضروری معلومات اور ہدایات</h3>
-        <div class="info-block">
-            <strong>1. اشتہارات کی آمدنی:</strong><br>ہر ایڈ مکمل کرنے پر اکاؤنٹ میں فورا <strong>$0.0003</strong> شامل کر دیے جائیں گے۔
-        </div>
-        <div class="info-block">
-            <strong>2. روزانہ کی حد:</strong><br>آپ روزانہ زیادہ سے زیادہ <strong>100 اشتہارات</strong> دیکھ سکتے ہیں۔ رات 12 بجے حد ری سیٹ ہوگی Sten.
-        </div>
-        <div class="info-block">
-            <strong>3. ودڈرا کا طریقہ کار:</strong><br>بیلنس <strong>$10.00</strong> مکمل ہونے پر آپ کسی بھی وقت EasyPaisa یا JazzCash کے ذریعے کیش آؤٹ کر سکتے ہیں۔
-        </div>
-        <a href="#page-main" class="btn-link-action" style="background: #4caf50; margin-top: 15px;" onclick="initTracking()">ڈیش بورڈ پر جائیں ➜</a>
-    </div>
-
-    <!-- 2. MAIN DASHBOARD PAGE -->
+<div class="app-box">
+    <!-- 1. MAIN DASHBOARD PAGE (بغیر ہدایات والے صفحے کے، ڈائریکٹ لائیو) -->
     <div id="page-main" class="screen" style="padding: 0;">
         <div class="live-bar">
             <div>👤 <span id="bar-num">User Account</span></div>
             <div class="live-balance">Balance: $<span id="bar-bal">0.00000</span></div>
         </div>
         <div style="padding: 15px;">
-            <div class="wallet-box">
+            <div class="wallet-card">
                 <div style="font-size: 12px; color: #666;">Watch Ads and Earn Money</div>
                 <div class="balance-txt">$<span id="wallet-bal">0.00000</span></div>
                 <div style="font-size: 11px; color: #999; font-weight: bold;" id="limit-txt">Ads Remaining: 100/100</div>
@@ -71,7 +53,7 @@
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </button>
 
-            <!-- پریمیم اینیمیٹڈ ان-ایپ ویڈیو اشتہار ونڈو -->
+            <!-- اینیمیٹڈ ان-ایپ ویڈیو اشتہار ونڈو -->
             <div id="adsterra-video-screen" class="adsterra-video-box">
                 <div class="video-graphic-loader"></div>
                 <h4 style="color: #00bcd4; font-size: 16px;">Loading Ad Campaign...</h4>
@@ -84,7 +66,7 @@
         </div>
     </div>
 
-    <!-- 3. WITHDRAW SCREEN -->
+    <!-- 2. WITHDRAW SCREEN -->
     <div id="page-withdraw" class="screen">
         <a href="#page-main" class="btn-link-action" style="background:#333; width:90px; margin-bottom:15px; padding:6px;">⬅ Back</a>
         <h3>Withdraw Money</h3><br>
@@ -103,7 +85,7 @@
         <button class="btn-blue" style="background:#4caf50;" onclick="submitWithdraw()">جمع کرائیں</button>
     </div>
 
-    <!-- 4. LOGIN SCREEN LAYER -->
+    <!-- 3. LOGIN SCREEN LAYER -->
     <div id="page-login">
         <div class="header-teal" style="margin: 0 0 20px 0;">
             <div class="logo-icon">💰</div>
@@ -119,25 +101,29 @@
                 <label>پاس ورڈ</label>
                 <input type="password" id="input-pass" placeholder="••••••••">
             </div>
-            <a href="#page-details" class="btn-link-action" onclick="captureUserPhone()">لاگ ان کریں ➜</a>
+            <!-- لاگ ان پر کلک کرتے ہی ڈائریکٹ ہوم پیج اوپن ہوگا -->
+            <a href="#page-main" class="btn-link-action" onclick="handleDirectAppLogin()">لاگ ان کریں ➜</a>
         </div>
     </div>
 
 </div>
 
-<script>
-    // آپ کی تصدیق شدہ ایڈسٹیرا لنک
-    const MY_ADSTERRA_LINK = "https://effectivecpmnetwork.com"; 
+<!-- ⚙️ ایڈسٹیرا سے کاپی کیا گیا "Get Code" (Popunder Script) کا پورا کوڈ نیچے والے بریکٹ میں پیسٹ کریں -->
+<script type="text/javascript">
+    /* ⬇️ اس لائن کے نیچے ایڈسٹیرا پینل سے حاصل کردہ پورا اسکرپٹ کوڈ پیسٹ کر دیں */
+    
+</script>
 
+<script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
-    let hasPopunderTriggered = false;
 
-    function captureUserPhone() {
+    function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
         if(phone) {
             document.getElementById('bar-num').innerText = phone;
         }
+        initTracking();
     }
 
     function initTracking() {
@@ -160,25 +146,12 @@
         } catch(e){}
     }
 
-    // 💡 آٹومیٹک پاپ انڈر سیکیورٹی بائی پاس انجن (سکرین پر کہیں بھی فرسٹ ٹچ پر رن ہوگا)
-    function triggerBackgroundPopunder() {
-        if (!hasPopunderTriggered && MY_ADSTERRA_LINK !== "") {
-            window.open(MY_ADSTERRA_LINK, '_blank');
-            hasPopunderTriggered = true; // صرف ایک بار ٹرگر لاک ہوگا
-        }
-    }
-
-    // واچ ایڈ فلو کنٹرولر
     function startAdsterraPopunderFlow() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
         }
 
-        // ہر نئی واچ پر پاپ انڈر ونڈو بھی اوپن کریں
-        window.open(MY_ADSTERRA_LINK, '_blank');
-
-        // مین انٹرفیس چینج کریں
         document.getElementById('ad-main-btn').style.display = 'none';
         document.getElementById('adsterra-video-screen').style.display = 'block';
         document.getElementById('claim-points-btn').style.display = 'none';
