@@ -49,8 +49,8 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- اشتہار شروع کرنے کا بٹن (اب یہ براہِ راست ایڈسٹیرا نیٹ ورک سے جڑا ہے) -->
-            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
+            <!-- اشتہار شروع کرنے کا لائیو بٹن -->
+            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startYourAdsterraSocialBar()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </button>
 
@@ -112,15 +112,12 @@
 
 </div>
 
-<!-- ⚙️ آپ کا کاپی کیا ہوا آفیشل ایڈسٹیرا پاپ انڈر اسکرپٹ لنک -->
+<!-- ⚙️ آپ کا کاپی کیا ہوا آفیشل ایڈسٹیرا سوشل بار اسکرپٹ یہاں کامیابی سے منسلک ہے -->
 <script src="https://effectivecpmnetwork.com"></script>
 
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
-    
-    // ایڈسٹیرا پینل کا آفیشل لائیو گیٹ وے یو آر ایل
-    const ADSTERRA_DIRECT_GATEWAY = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -150,15 +147,16 @@
         } catch(e){}
     }
 
-    function startAdsterraPopunderFlow() {
+    // سوشل بار ٹرگر پلس ان-ایپ ٹائمر لاجک
+    function startYourAdsterraSocialBar() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
         }
 
-        // 💡 ڈائریکٹ ارننگ لنک کنکشن: کلک ہوتے ہی اشتہار کو نئے محفوظ پیج پر اوپن کرنا
-        if (ADSTERRA_DIRECT_GATEWAY !== "") {
-            window.open(ADSTERRA_DIRECT_GATEWAY, '_blank');
+        // سوشل بار اسکرپٹ کو اسکرین پر کال کرنا
+        if (typeof window.triggerAd === 'function') {
+            window.triggerAd();
         }
 
         document.getElementById('ad-main-btn').style.display = 'none';
