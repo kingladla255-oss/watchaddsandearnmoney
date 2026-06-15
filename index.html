@@ -24,14 +24,14 @@
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
         .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
         .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
-        .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
+        
+        /* ان بلاک ایبل کسٹم لنک بٹن اسٹائل */
+        .watch-ad-designer-link { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
         .adsterra-video-box { display: none; background: #0f172a; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #00bcd4; }
         .video-graphic-loader { width: 50px; height: 50px; border: 4px solid rgba(0,188,212,0.1); border-left-color: #00bcd4; border-radius: 50%; animation: play-rotate 1s linear infinite; margin: 15px auto; }
         @keyframes play-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .timer-circle { width: 70px; height: 70px; border: 4px solid #ff9800; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; margin: 15px auto; color: #ff9800; }
-        
-        /* 🆕 مستقل نیٹو بینر اشتہار کا باکس اسٹائل */
         .adsterra-native-banner-slot { width: 100%; min-height: 90px; margin-top: auto; padding: 10px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     </style>
 </head>
@@ -51,10 +51,10 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- اشتہار شروع کرنے کا پریمیم ڈیزائنر بٹن -->
-            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
+            <!-- 💡 خالص HTML لنک: یہ کروم براؤزر کے ری ڈائریکٹ اور گوگل اوپن ہونے والے مسئلے کو مستقل بلاک کرے گا -->
+            <a href="https://effectivecpmnetwork.com" target="_blank" class="watch-ad-designer-link" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
-            </button>
+            </a>
 
             <!-- اینیمیٹڈ ان-ایپ ویڈیو اشتہار ونڈو -->
             <div id="adsterra-video-screen" class="adsterra-video-box">
@@ -107,23 +107,19 @@
         </div>
     </div>
 
-    <!-- 🆕 مستقل نیٹو بینر اشتہار کا لائیو سلاٹ (یہاں تصویر والے اشتہارات شو ہوں گے) -->
+    <!-- مستقل تصویری نیٹو بینر اشتہار کا لائیو سلاٹ -->
     <div class="adsterra-native-banner-slot">
         <span style="color: #cbd5e1; font-size: 11px; display: block; margin-bottom: 5px;">Sponsored Advertisement</span>
-        
-        <!-- ⚙️ ایڈسٹیرا پینل سے حاصل کردہ Native Banner یا Native Ads کا پورا اسکرپٹ کوڈ اس لائن کے نیچے پیسٹ کریں -->
-        
     </div>
 
-</div> <!-- app-box end -->
+</div>
 
-<!-- ⚙️ آپ کا کاپی کیا ہوا حقیقی پاپ انڈر اسکرپٹ یہاں کامیابی سے رینڈرڈ ہے -->
+<!-- ⚙️ آپ کا کاپی کیا ہوا آفیشل ایڈسٹیرا پاپ انڈر اسکرپٹ لنک -->
 <script src="https://effectivecpmnetwork.com"></script>
 
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
-    const ADSTERRA_URL_FALLBACK = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -156,12 +152,11 @@
     function startAdsterraPopunderFlow() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
+            event.preventDefault(); // حد ختم ہونے پر لنک اوپن ہونا بلاک ہو جائے گا
             return;
         }
 
-        // پاپ انڈر اشتہار پلے کرنے کے لیے لنک ٹرگر کریں
-        window.open(ADSTERRA_URL_FALLBACK, '_blank');
-
+        // انٹرفیس لاک کریں اور ٹائمر آن کریں
         document.getElementById('ad-main-btn').style.display = 'none';
         document.getElementById('adsterra-video-screen').style.display = 'block';
         document.getElementById('claim-points-btn').style.display = 'none';
@@ -198,8 +193,8 @@
         let n = document.getElementById('w-account').value;
         let a = parseFloat(document.getElementById('w-amount').value);
         if(!n || !a) { alert("تمام خانے پُر کریں!"); return; }
-        if(a > myBalance) { alert("آپ کا بیلنس ناکافی ہے!"); return; }
         if(myBalance < 10.0) { alert("کم از کم حد $10 ہے!"); return; }
+        if(a > myBalance) { alert("آپ کا بیلنس ناکافی ہے!"); return; }
         
         alert(`کامیابی: درخواست موصول ہو گئی ہے۔`);
         myBalance -= a;
