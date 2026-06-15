@@ -34,7 +34,7 @@
 </head>
 <body>
 <div class="app-box">
-    <!-- 1. MAIN DASHBOARD PAGE (Direct Live view) -->
+    <!-- 1. MAIN DASHBOARD PAGE -->
     <div id="page-main" class="screen" style="padding: 0;">
         <div class="live-bar">
             <div>👤 <span id="bar-num">User Account</span></div>
@@ -107,12 +107,15 @@
 
 </div>
 
-<!-- ⚙️ آپ کی کاپی کی ہوئی آفیشل ایڈسٹیرا پاپ انڈر اسکرپٹ یہاں کامیابی سے منسلک ہو چکی ہے -->
+<!-- ⚙️ یہ وہ جگہ ہے جہاں آپ کا آفیشل ایڈسٹیرا پاپ انڈر اسکرپٹ ٹیگ لائیو منسلک ہے -->
 <script type='text/javascript' src='//://highperformanceformat.com'></script>
 
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
+
+    // ایڈسٹیرا ڈائریکٹ یو آر ایل جو اسکرپٹ بیک گراؤنڈ میں لوڈ کرے گا
+    const ADSTERRA_URL_TARGET = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -142,10 +145,16 @@
         } catch(e){}
     }
 
+    // 💡 پریمیم پاپ انڈر فلو کنٹرولر
     function startAdsterraPopunderFlow() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
+        }
+
+        // پاپ انڈر لنک کو نئے ٹیب میں زبردستی اوپن کرنا
+        if (ADSTERRA_URL_TARGET !== "") {
+            window.open(ADSTERRA_URL_TARGET, '_blank');
         }
 
         document.getElementById('ad-main-btn').style.display = 'none';
