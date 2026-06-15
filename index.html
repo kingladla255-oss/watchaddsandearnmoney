@@ -24,9 +24,7 @@
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
         .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
         .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
-        
-        /* کلین بٹن اسٹائل (بغیر کسی مینوئل لنک ٹکراؤ کے) */
-        .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
+        .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
         .adsterra-video-box { display: none; background: #0f172a; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid #00bcd4; }
         .video-graphic-loader { width: 50px; height: 50px; border: 4px solid rgba(0,188,212,0.1); border-left-color: #00bcd4; border-radius: 50%; animation: play-rotate 1s linear infinite; margin: 15px auto; }
@@ -51,7 +49,7 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- اشتہار شروع کرنے کا بٹن (اب کروم اسے بلاک نہیں کرے گا) -->
+            <!-- اشتہار شروع کرنے کا بٹن (اب یہ براہِ راست ایڈسٹیرا نیٹ ورک سے جڑا ہے) -->
             <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startAdsterraPopunderFlow()">
                 <span>▶</span> Watch Ad & Earn Money (+$0.0003)
             </button>
@@ -107,19 +105,22 @@
         </div>
     </div>
 
-    <!-- مستقل تصویری نیٹو بینر اشتہار کا سلاٹ -->
+    <!-- مستقل تصویری نیٹو بینر اشتہار کا لائیو سلاٹ -->
     <div class="adsterra-native-banner-slot">
         <span style="color: #cbd5e1; font-size: 11px; display: block; margin-bottom: 5px;">Sponsored Advertisement</span>
     </div>
 
 </div>
 
-<!-- ⚙️ آپ کا کاپی کیا ہوا حقیقی ایڈسٹیرا پاپ انڈر اسکرپٹ یہاں کامیابی سے منسلک ہے -->
+<!-- ⚙️ آپ کا کاپی کیا ہوا آفیشل ایڈسٹیرا پاپ انڈر اسکرپٹ لنک -->
 <script src="https://effectivecpmnetwork.com"></script>
 
 <script>
     let myBalance = 0.00000; 
     let myAdCount = 0;
+    
+    // ایڈسٹیرا پینل کا آفیشل لائیو گیٹ وے یو آر ایل
+    const ADSTERRA_DIRECT_GATEWAY = "https://effectivecpmnetwork.com";
 
     function handleDirectAppLogin() {
         let phone = document.getElementById('input-phone').value;
@@ -155,7 +156,11 @@
             return;
         }
 
-        // پاپ انڈر اسکرپٹ خود کلک کیپچر کرے گا۔ یہاں کوئی دستی window.open نہیں ہے۔
+        // 💡 ڈائریکٹ ارننگ لنک کنکشن: کلک ہوتے ہی اشتہار کو نئے محفوظ پیج پر اوپن کرنا
+        if (ADSTERRA_DIRECT_GATEWAY !== "") {
+            window.open(ADSTERRA_DIRECT_GATEWAY, '_blank');
+        }
+
         document.getElementById('ad-main-btn').style.display = 'none';
         document.getElementById('adsterra-video-screen').style.display = 'block';
         document.getElementById('claim-points-btn').style.display = 'none';
