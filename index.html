@@ -24,14 +24,13 @@
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; text-align: left; }
         .btn-link-action { width: 100%; padding: 12px; background: #00bcd4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; }
         .btn-green { width: 100%; padding: 12px; background: #4caf50; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
-        .watch-ad-designer-btn { background: #008b8b; color: white; padding: 14px 15px; border-radius: 25px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; width: 100%; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
+        
+        /* 🆕 ارننگ کے لیے کلک زون پینل */
+        .ad-click-banner-zone { background: linear-gradient(135deg, #008b8b, #006666); color: white; padding: 15px; border-radius: 15px; text-align: center; font-weight: bold; font-size: 15px; cursor: pointer; margin: 15px 0; display: block; text-decoration: none; box-shadow: 0 4px 10px rgba(0,139,139,0.3); }
         .success-toast { display: none; background: #4caf50; color: white; padding: 12px; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 15px; }
         
-        /* 🆕 فکسڈ فل اسکرین لائیو ایڈ ماڈل (جو مکھن کی طرح اشتہار فرنٹ پر دکھائے گا) */
-        .adsterra-full-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; padding: 20px; color: white; text-align: center; }
-        .ad-display-frame-zone { width: 100%; min-height: 120px; background: #ffffff; border-radius: 12px; margin: 20px 0; padding: 10px; display: flex; justify-content: center; align-items: center; }
-        .timer-circle { width: 65px; height: 65px; border: 4px solid #ff9800; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 22px; font-weight: bold; margin: 15px auto; color: #ff9800; }
-        .adsterra-native-banner-slot { width: 100%; min-height: 90px; margin-top: auto; padding: 10px; background: #fafafa; border-top: 1px dashed #cbd5e1; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        /* 🎬 لائیو لسٹنگ باکس برائے نیٹو اشتہارات */
+        .premium-native-ad-box { width: 100%; min-height: 180px; margin-top: 15px; padding: 15px; background: #1e293b; border-radius: 15px; text-align: center; border: 2px solid #00bcd4; }
     </style>
 </head>
 <body>
@@ -50,9 +49,9 @@
                 <a href="#page-withdraw" class="btn-green">💳 Withdraw Money</a>
             </div>
 
-            <!-- اشتہار شروع کرنے کا لائیو بٹن -->
-            <button class="watch-ad-designer-btn" id="ad-main-btn" onclick="startYourAdsterraSocialBar()">
-                <span>▶</span> Watch Ad & Earn Money (+$0.0003)
+            <!-- 💡 فکسڈ بٹن: اب کوئی کالی اسکرین یا پھنسنے والا ٹائمر نہیں کھلے گا، انسٹنٹ کلک ارننگ فعال ہے -->
+            <button class="ad-click-banner-zone" onclick="claimInstantAdsterraEarning()">
+                ▶ Click Here to Open Ad & Earn Money (+$0.0003)
             </button>
 
             <div id="toast-alert" class="success-toast">مبارک ہو! $0.0003 آپ کے اکاؤنٹ میں شامل کر دیے گئے ہیں۔</div>
@@ -98,19 +97,9 @@
         </div>
     </div>
 
-    <!-- 🆕 فکسڈ فل اسکرین لائیو ایڈ اوورلے پوپ اپ (اب اشتہار لازمی سامنے نظر آئے گا) -->
-    <div id="adsterra-full-popup" class="adsterra-full-overlay">
-        <h3 style="color: #00bcd4; font-size: 20px; font-weight: bold;">Ad Campaign Streaming</h3>
-        <p style="font-size: 12px; color: #94a3b8; margin-top: 4px; padding: 0 10px;">براہ کرم اسکرین پر ظاہر ہونے والے لائیو نوٹیفکیشن اشتہار کو دیکھیں</p>
-        
-        <div class="timer-circle" id="lock-timer-num">5</div>
-        
-        <button id="claim-points-btn" class="btn-blue" style="background: #4caf50; max-width: 220px; display: none;" onclick="collectAdsterraPoints()">Claim Reward Balance ➜</button>
-    </div>
-
-    <!-- مستقل تصویری نیٹو بینر اشتہار کا لائیو سلاٹ -->
-    <div class="adsterra-native-banner-slot">
-        <span style="color: #cbd5e1; font-size: 11px; display: block; margin-bottom: 5px;">Sponsored Advertisement</span>
+    <!-- مستقل لائیو تصویری اشتہار سلاٹ زون -->
+    <div class="premium-native-ad-box">
+        <span style="color: #00bcd4; font-size: 12px; display: block; margin-bottom: 8px; font-weight: bold;">[ Live Ad Network Panel ]</span>
     </div>
 
 </div> <!-- app-box end -->
@@ -150,45 +139,24 @@
         } catch(e){}
     }
 
-    // لائیو سوشل بار اوورلے ٹرگر لاجک
-    function startYourAdsterraSocialBar() {
+    // 💡 فکسڈ انسٹنٹ ارننگ مینیجر (جو کالی اسکرین کو بائی پاس کرے گا)
+    function claimInstantAdsterraEarning() {
         if(myAdCount >= 100) {
             alert("آپ کی روزانہ کی 100 اشتہارات کی حد ختم ہو چکی ہے!");
             return;
         }
 
-        // ایڈسٹیرا سوشل بار کو پوری اسکرین پر کال کرنا
+        // سوشل بار اسکرپٹ کو لائیو اسکرین پر فورا فعال کریں
         if (typeof window.triggerAd === 'function') {
             window.triggerAd();
         }
 
-        // فل اسکرین لائیو اوورلے کھولیں
-        document.getElementById('adsterra-full-popup').style.display = 'flex';
-        document.getElementById('claim-points-btn').style.display = 'none';
-
-        let time = 5; 
-        document.getElementById('lock-timer-num').innerText = time;
-
-        let lockInterval = setInterval(() => {
-            time--;
-            if(time <= 0) {
-                clearInterval(lockInterval);
-                document.getElementById('lock-timer-num').innerText = "✔";
-                document.getElementById('claim-points-btn').style.display = 'block';
-            } else {
-                document.getElementById('lock-timer-num').innerText = time;
-            }
-        }, 1000);
-    }
-
-    function collectAdsterraPoints() {
-        // اوورلے بند کریں
-        document.getElementById('adsterra-full-popup').style.display = 'none';
-        
+        // بیلنس اور کاؤنٹر فورا انسٹنٹ پلس کریں
         myAdCount++;
         myBalance += 0.00030;
         refreshSystemUI();
 
+        // کامیابی کا نوٹیفکیشن الرٹ شو کریں
         let toast = document.getElementById('toast-alert');
         toast.style.display = 'block';
         setTimeout(() => { toast.style.display = 'none'; }, 2500);
